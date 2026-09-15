@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { BrandLockup } from "@/components/site/BrandLockup";
 
 const NAV = [
   { to: "/", label: "Home" },
