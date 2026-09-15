@@ -19,6 +19,7 @@ import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ScannerRouteImport } from './routes/scanner'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
@@ -71,6 +72,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScannerRoute = ScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/how-it-works': typeof HowItWorksRoute
   '/methodology': typeof MethodologyRoute
   '/privacy': typeof PrivacyRoute
+  '/scanner': typeof ScannerRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/how-it-works': typeof HowItWorksRoute
   '/methodology': typeof MethodologyRoute
   '/privacy': typeof PrivacyRoute
+  '/scanner': typeof ScannerRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/how-it-works': typeof HowItWorksRoute
   '/methodology': typeof MethodologyRoute
   '/privacy': typeof PrivacyRoute
+  '/scanner': typeof ScannerRoute
   '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/methodology'
     | '/privacy'
+    | '/scanner'
     | '/terms'
     | '/admin'
   fileRoutesByTo: FileRoutesByTo
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/methodology'
     | '/privacy'
+    | '/scanner'
     | '/terms'
     | '/admin'
   id:
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/methodology'
     | '/privacy'
+    | '/scanner'
     | '/terms'
     | '/_authenticated/admin'
   fileRoutesById: FileRoutesById
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   HowItWorksRoute: typeof HowItWorksRoute
   MethodologyRoute: typeof MethodologyRoute
   PrivacyRoute: typeof PrivacyRoute
+  ScannerRoute: typeof ScannerRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scanner': {
+      id: '/scanner'
+      path: '/scanner'
+      fullPath: '/scanner'
+      preLoaderRoute: typeof ScannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -291,6 +311,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowItWorksRoute: HowItWorksRoute,
   MethodologyRoute: MethodologyRoute,
   PrivacyRoute: PrivacyRoute,
+  ScannerRoute: ScannerRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
