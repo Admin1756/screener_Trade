@@ -54,15 +54,16 @@ function decodeClause(value: string): string {
   return value
     .replace(/\\u0028/gi, "(")
     .replace(/\\u0029/gi, ")")
-    .replace(/\\u003C/gi, "<")
-    .replace(/\\u003E/gi, ">")
-    .replace(/\\u0026/gi, "&")
+    .replace(/&gt;/g, ">")
+    .replace(/&lt;/g, "<")
+    .replace(/&#39;/g, "'")
     .replace(/&quot;/g, '"')
     .replace(/&amp;/g, "&")
     .replace(/\\"/g, '"')
     .replace(/\\\//g, "/")
     .replace(/\\n/g, " ")
-    .replace(/\\\\/g, "\\");
+    .replace(/\\\\/g, "\\")
+    .trim();
 }
 
 /**
