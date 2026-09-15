@@ -98,10 +98,11 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
       /<meta name="csrf-token" content="([^"]+)"/i,
       /csrfToken['"]?\s*[:=]\s*['"]([^'"]+)['"]/i,
     ]);
+    const xsrf = decodeURIComponent(cookies.match(/XSRF-TOKEN=([^;]+)/)?.[1] ?? "");
     const clauseRaw = firstMatch(html, [
+      /&quot;atlas_query&quot;:&quot;([\s\S]*?)&quot;,/,
+      /"atlas_query"\s*:\s*"((?:[^"\\]|\\.)*)"/,
       /"scan_clause"\s*:\s*"((?:[^"\\]|\\.)*)"/,
-      /scan_clause['"]?\s*[:=]\s*['"]((?:[^'"\\]|\\.)*)['"]/,
-      /name="scan_clause"[^>]*value="([^"]*)"/i,
     ]);
 
     if (!csrf || !clauseRaw) {
@@ -111,22 +112,22 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
       };
     }
 
-    const body = new URLSearchParams({ scan_clause: decodeClause(clauseRaw) });
     let res: Response;
     try {
       res = await fetch("https://chartink.com/screener/process", {
         method: "POST",
         headers: {
           "user-agent": UA,
-          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "content-type": "application/json",
           "x-csrf-token": csrf,
+          ...(xsrf ? { "x-xsrf-token": xsrf } : {}),
           "x-requested-with": "XMLHttpRequest",
-          accept: "application/json, text/javascript, */*; q=0.01",
+          accept: "*/*",
           referer: pageUrl,
           origin: "https://chartink.com",
           ...(cookies ? { cookie: cookies } : {}),
         },
-        body: body.toString(),
+        body: JSON.stringify({ scan_clause: decodeClause(clauseRaw) }),
       });
     } catch {
       return { ok: false, reason: "Could not reach the scanner right now." };
