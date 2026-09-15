@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { BrandLockup } from "@/components/site/BrandLockup";
 
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/check", label: "Check Stock" },
+  { to: "/scanner", label: "Scanner" },
   { to: "/how-it-works", label: "How It Works" },
   { to: "/methodology", label: "Methodology" },
   { to: "/about", label: "About" },
@@ -18,9 +20,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-6">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="grid size-9 place-items-center rounded-md bg-primary/15 ring-1 ring-primary/30">
-            <span className="font-mono text-sm font-semibold text-primary">Z</span>
-          </span>
+          <BrandLockup size="sm" caption={false} />
           <span className="leading-none">
             <span className="block text-sm font-semibold tracking-tight">Zamzam Capital</span>
             <span className="label-mono mt-1 block">Shariah Screener</span>
