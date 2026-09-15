@@ -34,9 +34,9 @@ function slugFromLink(raw: string): string | null {
 }
 
 function collectCookies(res: Response): string {
-  const raw = res.headers.get("set-cookie") ?? "";
-  return raw
-    .split(/,(?=[^;]+?=)/)
+  const headers = res.headers as Headers & { getSetCookie?: () => string[] };
+  const list = headers.getSetCookie?.() ?? (res.headers.get("set-cookie") ?? "").split(/,(?=[^;]+?=)/);
+  return list
     .map((c) => c.split(";")[0]?.trim())
     .filter(Boolean)
     .join("; ");
