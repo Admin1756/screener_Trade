@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getSetting } from "@/lib/stocks";
+import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
 
 type Social = { instagram?: string; youtube?: string; linkedin?: string; telegram?: string };
 
@@ -13,10 +14,10 @@ export function Footer() {
 
   const socials = (
     [
-      ["Instagram", social?.instagram],
-      ["YouTube", social?.youtube],
-      ["LinkedIn", social?.linkedin],
-      ["Telegram", social?.telegram],
+       ["Instagram", social?.instagram || "https://www.instagram.com/zamzamcapitalindia"],
+       ["YouTube", social?.youtube || "https://www.youtube.com/@zamzamcapital"],
+       ["LinkedIn", social?.linkedin || "https://www.linkedin.com/company/zamzam-capital"],
+       ["Telegram", social?.telegram || "https://t.me/zamzamcapital"],
     ] as const
   ).filter(([, url]) => Boolean(url));
 
@@ -26,14 +27,9 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3">
-              <span className="grid size-9 place-items-center rounded-md bg-primary/15 ring-1 ring-primary/30">
-                <span className="font-mono text-sm font-semibold text-primary">Z</span>
-              </span>
+               <img src={zamzamLogo.url} alt="" className="size-10 object-contain" />
               <span className="text-sm font-semibold tracking-tight">Zamzam Capital</span>
             </div>
-            <p className="mt-4 max-w-[34ch] text-sm text-muted-foreground">
-              Making Shariah-focused stock research simpler.
-            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
@@ -41,10 +37,11 @@ export function Footer() {
               <p className="label-mono">Product</p>
               <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <Link to="/check" className="transition-colors hover:text-foreground">
-                    Check Stock
+                   <Link to="/" className="transition-colors hover:text-foreground">
+                     Screener
                   </Link>
                 </li>
+                 <li><Link to="/how-it-works" className="transition-colors hover:text-foreground">Product</Link></li>
                 <li>
                   <Link to="/methodology" className="transition-colors hover:text-foreground">
                     Methodology
