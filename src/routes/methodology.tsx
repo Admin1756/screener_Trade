@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { PageHeader, SiteShell } from "@/components/site/SiteShell";
-import { getActiveDataset, formatDate } from "@/lib/stocks";
 
 export const Route = createFileRoute("/methodology")({
   head: () => ({
@@ -26,11 +24,6 @@ const ratios = [
 ];
 
 function MethodologyPage() {
-  const { data: dataset } = useQuery({
-    queryKey: ["dataset", "active"],
-    queryFn: getActiveDataset,
-  });
-
   return (
     <SiteShell>
       <PageHeader
@@ -79,15 +72,10 @@ function MethodologyPage() {
         <section className="border-t border-border py-9">
           <p className="label-mono">Current screening data</p>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            This screener displays classifications from the currently published Zamzam Capital
-            dataset. It does not recalculate the framework from Chartink or Screener.in figures,
+            This screener displays classifications from the stock list maintained in Zamzam AI Capital.
+            It does not recalculate the framework from Chartink or Screener.in figures,
             or infer a status when no record exists.
           </p>
-          <dl className="mt-6 grid grid-cols-2 gap-6 text-sm sm:grid-cols-3">
-            <div><dt className="label-mono">Version</dt><dd className="mt-1 font-mono">{dataset?.version ?? "—"}</dd></div>
-            <div><dt className="label-mono">Records</dt><dd className="mt-1 font-mono">{dataset?.record_count ?? "—"}</dd></div>
-            <div><dt className="label-mono">Published</dt><dd className="mt-1 font-mono">{formatDate(dataset?.published_at)}</dd></div>
-          </dl>
           <a href="https://zamzam-capital.com/" target="_blank" rel="noreferrer noopener" className="mt-7 inline-block text-sm font-medium text-primary hover:underline">
             Read the framework on Zamzam Capital&apos;s website ↗
           </a>

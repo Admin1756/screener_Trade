@@ -29,7 +29,7 @@ function PrivacyPage() {
           links are used only to match a record in the current screening dataset.
         </p>
         <p>
-          Accounts exist only for Zamzam Capital administrators who maintain the screening dataset.
+          Stock uploads and administrator accounts are managed in Zamzam AI Capital.
           Administrator credentials are stored securely and passwords are never stored in plain
           text.
         </p>
