@@ -12,7 +12,7 @@ export type BulkEntry = {
   scannerClose?: string | null;
   scannerChange?: string | null;
   /** Source columns shown exactly as the source listed them. */
-  cells?: string[];
+  cells?: string[] | undefined;
   stock: StockRecord | null;
   status: ComplianceStatus | "NOT_AVAILABLE";
 };
@@ -54,7 +54,7 @@ export async function lookupMany(symbols: string[]): Promise<Map<string, StockRe
 }
 
 export async function checkBulk(
-  items: { symbol: string; name?: string | null; close?: string | null; change?: string | null; cells?: string[] }[],
+  items: { symbol: string; name?: string | null; close?: string | null; change?: string | null; cells?: string[] | undefined }[],
 ): Promise<BulkEntry[]> {
   const map = await lookupMany(items.map((i) => i.symbol));
   return items.map((item, index) => {
