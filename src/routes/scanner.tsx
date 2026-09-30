@@ -34,13 +34,23 @@ function ScannerPage() {
         <div className="relative mx-auto max-w-5xl px-5 py-16 sm:px-6 sm:py-24">
           <BrandLockup />
           <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
-            Screen a whole scanner at once.
+            Your screens. Our Shariah check.
           </h1>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground">
-            Paste a public Chartink scanner link and every stock it returns is checked against the
-            Zamzam Capital database — kept in the scanner&apos;s own sequence, top mover first. Or
-            paste your own bulk list of symbols.
+            Paste a Chartink scanner for technicals or a Screener.in screen for fundamentals. Every
+            stock comes back with all the columns the source shows, in the same order, with its
+            Shariah status right after the name. Or paste your own list of symbols.
           </p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-border bg-surface/50 p-4">
+              <p className="label-mono">Technical · Chartink</p>
+              <p className="mt-1 text-sm text-muted-foreground">Top movers first, exactly as scanned.</p>
+            </div>
+            <div className="rounded-xl border border-border bg-surface/50 p-4">
+              <p className="label-mono">Fundamental · Screener.in</p>
+              <p className="mt-1 text-sm text-muted-foreground">P/E, market cap, ROCE and every other column you chose.</p>
+            </div>
+          </div>
           <div className="mt-10">
             <BulkChecker />
           </div>
