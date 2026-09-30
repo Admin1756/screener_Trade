@@ -8,12 +8,12 @@ export const Route = createFileRoute("/how-it-works")({
       {
         name: "description",
         content:
-          "Search, screen, know. How Zamzam Capital turns a stock name, symbol or charting link into a clear Shariah compliance status.",
+          "How the Zamzam Capital screener checks Chartink and Screener.in lists against its Shariah compliance database.",
       },
       { property: "og:title", content: "How It Works — Zamzam Capital" },
       {
         property: "og:description",
-        content: "Three steps: search a stock, screen it against our dataset, know its status.",
+        content: "Three steps: paste a screen, match its stocks, and review their recorded Shariah status.",
       },
     ],
   }),
@@ -23,18 +23,18 @@ export const Route = createFileRoute("/how-it-works")({
 const STEPS = [
   {
     n: "01",
-    title: "Search",
-    body: "Enter a stock name, symbol, NSE or BSE code — or paste a supported charting platform link. Suggestions appear as you type so you can confirm the exact company before screening.",
+    title: "Paste",
+    body: "Paste a public Chartink technical scanner link, a Screener.in fundamental screen link, or your own list of symbols.",
   },
   {
     n: "02",
     title: "Screen",
-    body: "Your input is matched against the currently published Zamzam Capital screening dataset. Matching is exact-first on symbol and exchange codes, then falls back to partial company-name matching.",
+    body: "Stocks are kept in the same order as the source, with the source's available columns intact. Their symbols are matched against Zamzam Capital's current screening dataset.",
   },
   {
     n: "03",
     title: "Know",
-    body: "You see the recorded compliance status along with the business-activity and financial screening results, the compliance date and when the record was last updated.",
+    body: "See each stock's recorded Shariah status beside its name. Stocks absent from the active dataset are marked Not Available, never guessed.",
   },
 ];
 
@@ -42,9 +42,9 @@ function HowItWorks() {
   return (
     <SiteShell>
       <PageHeader
-        eyebrow="How It Works"
-        title="From a ticker to a clear answer."
-        intro="Three steps, no guesswork. Every answer comes from the published dataset."
+        eyebrow="Product"
+        title="From your screen to a clear status."
+        intro="Bring your technical or fundamental screen; review every stock in its original order."
       />
       <section className="mx-auto max-w-4xl px-5 py-16 sm:px-6">
         <ol className="space-y-4">
@@ -65,17 +65,17 @@ function HowItWorks() {
         <div className="mt-10 rounded-xl border border-border glass p-6">
           <p className="label-mono">Charting links</p>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            When you paste a charting platform link, we read the stock symbol contained in the link
-            and match it to our dataset. We do not retrieve restricted data from those platforms.
-            Charting-link support by Zamzam Capital.
+            Chartink and Screener.in links are read as public screens. Market figures come from the
+            source screen; Shariah statuses come only from Zamzam Capital&apos;s published dataset.
+            Link support by Zamzam Capital does not imply a partnership with either platform.
           </p>
         </div>
 
         <Link
-          to="/check"
+          to="/"
           className="mt-10 inline-block rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          Check a stock
+          Open screener
         </Link>
       </section>
     </SiteShell>

@@ -32,6 +32,14 @@ const PLATFORMS = [
   { key: "telegram", name: "Telegram", Icon: Send, blurb: "Fast updates as the dataset changes." },
 ] as const;
 
+// Public profiles listed on zamzam-capital.com.
+const OFFICIAL_LINKS: Record<keyof Social, string> = {
+  instagram: "https://www.instagram.com/zamzamcapitalindia",
+  youtube: "https://www.youtube.com/@zamzamcapital",
+  linkedin: "https://www.linkedin.com/company/zamzam-capital",
+  telegram: "https://t.me/zamzamcapital",
+};
+
 function ConnectPage() {
   const { data } = useQuery({
     queryKey: ["settings", "social"],
@@ -48,7 +56,7 @@ function ConnectPage() {
       <section className="mx-auto max-w-5xl px-5 py-16 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2">
           {PLATFORMS.map(({ key, name, Icon, blurb }) => {
-            const url = data?.[key];
+             const url = data?.[key] || OFFICIAL_LINKS[key];
             const inner = (
               <>
                 <span className="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/20">
@@ -85,10 +93,7 @@ function ConnectPage() {
             );
           })}
         </div>
-        <p className="mt-8 text-xs text-muted-foreground">
-          Official profile links are published by Zamzam Capital from the admin portal. Cards stay
-          inactive until a real URL is set.
-        </p>
+        <p className="mt-8 text-xs text-muted-foreground">Profiles listed on zamzam-capital.com.</p>
       </section>
     </SiteShell>
   );
