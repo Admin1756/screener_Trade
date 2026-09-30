@@ -1,0 +1,3 @@
+// Public, read-only connection to Zamzam AI Capital stock classifications.
+export const aiCapitalPublicUrl = 'https://khretugwubsgjzuiaroe.supabase.co';
+export const aiCapitalPublishableKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtocmV0dWd3dWJzZ2p6dWlhcm9lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MTAyMDgsImV4cCI6MjA4NzI4NjIwOH0.B94rcw798Ai0VkY8vMFePoYhHszOJ6MZ4z20Wi0HHro';
