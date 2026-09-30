@@ -5,7 +5,6 @@ import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
 
 const NAV = [
   { to: "/", label: "Screener" },
-  { to: "/how-it-works", label: "Product" },
   { to: "/methodology", label: "Methodology" },
   { to: "/about", label: "About" },
   { to: "/connect", label: "Connect" },

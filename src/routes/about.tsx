@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { PageHeader, SiteShell } from "@/components/site/SiteShell";
-import { getSetting } from "@/lib/stocks";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -10,12 +8,12 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Zamzam Capital is focused on making Shariah-focused stock research simpler, faster and more accessible.",
+          "Meet Zamzam Capital, a SEBI-registered research analyst bringing market research and Shariah screening together.",
       },
       { property: "og:title", content: "About Zamzam Capital" },
       {
         property: "og:description",
-        content: "Making Shariah-focused stock research simpler, faster and more accessible.",
+        content: "Learn about Zamzam Capital's research and Shariah-compliant investing approach.",
       },
     ],
   }),
@@ -23,45 +21,37 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
-  const { data } = useQuery({
-    queryKey: ["settings", "about"],
-    queryFn: () => getSetting<{ body?: string }>("about"),
-  });
-
   return (
     <SiteShell>
       <PageHeader
         eyebrow="About"
         title="About Zamzam Capital"
-        intro="Making Shariah-focused stock research simpler."
+        intro="Research and Shariah screening for investors in Indian equities."
       />
       <section className="mx-auto max-w-3xl space-y-5 px-5 py-16 text-sm leading-relaxed text-muted-foreground sm:px-6">
-        {data?.body?.trim() ? (
-          <p className="whitespace-pre-line">{data.body}</p>
-        ) : (
-          <>
-            <p>
-              Zamzam Capital is a SEBI-registered research analyst focused on Shariah-compliant equity
-              research in India (registration INH000016199). Its work brings together capital-market
-              research and Islamic finance to help investors assess listed companies.
-            </p>
-            <p>
-              This screener lets you paste a public Chartink technical screen, a Screener.in
-              fundamental screen, or your own list of symbols. It preserves the source order and
-              available figures, while Shariah classifications come from our maintained dataset.
-            </p>
-            <p>
-              Every result shown is read directly from the currently published dataset. We do not
-              estimate, generate or infer classifications. Where a stock is not present, we say so.
-            </p>
-          </>
-        )}
+        <p>
+          Zamzam Capital is a SEBI-registered Research Analyst (INH000016199; BSE enlistment
+          6158). Founded by Saif Ahmed, the firm brings together market research and
+          Shariah-compliant investing.
+        </p>
+        <p>
+          Its published approach combines fundamental and technical analysis with Shariah
+          screening. The firm also offers research-led stock plans and long-term model portfolios.
+          It says its Shariah screening follows three stages: business sector, financial ratios,
+          and qualitative review.
+        </p>
+        <p>
+          On this site, you can paste a public Chartink technical scan, a Screener.in fundamental
+          screen, or a list of symbols. Stocks stay in the source order, with the recorded
+          compliance status shown beside each name. Results come only from the current uploaded
+          Zamzam Capital dataset; stocks absent from it are marked Not Available.
+        </p>
         <p className="border-t border-border pt-5 text-xs">
           Zamzam Capital does not provide guarantees of investment performance or financial return,
           and nothing on this platform constitutes personalized investment advice.
         </p>
         <p className="text-xs">
-          <a href="https://zamzam-capital.com/about/" target="_blank" rel="noreferrer noopener" className="text-primary hover:underline">Read more on the official Zamzam Capital website ↗</a>
+          <a href="https://zamzam-capital.com/" target="_blank" rel="noreferrer noopener" className="text-primary hover:underline">Visit the official Zamzam Capital website ↗</a>
         </p>
       </section>
     </SiteShell>

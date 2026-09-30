@@ -1,59 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageHeader, SiteShell } from "@/components/site/SiteShell";
-import { getActiveDataset, getSetting, formatDate } from "@/lib/stocks";
-
-type Methodology = {
-  intro?: string;
-  business_activity?: string;
-  financial?: string;
-  thresholds?: string;
-  data_updates?: string;
-};
+import { getActiveDataset, formatDate } from "@/lib/stocks";
 
 export const Route = createFileRoute("/methodology")({
   head: () => ({
     meta: [
-      { title: "Our Shariah Screening Approach — Zamzam Capital" },
-      {
-        name: "description",
-        content:
-          "How Zamzam Capital classifies stocks: business activity screening, financial screening, thresholds and data update practices.",
-      },
-      { property: "og:title", content: "Our Shariah Screening Approach — Zamzam Capital" },
-      {
-        property: "og:description",
-        content:
-          "Business activity screening, financial screening and the data behind every classification.",
-      },
+      { title: "Shariah Screening Methodology — Zamzam Capital" },
+      { name: "description", content: "Zamzam Capital's published three-stage Shariah screening framework: business sector, five financial ratios, and qualitative review." },
+      { property: "og:title", content: "Shariah Screening Methodology — Zamzam Capital" },
+      { property: "og:description", content: "Read Zamzam Capital's published three-stage Shariah screening framework and financial ratio criteria." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: MethodologyPage,
 });
 
-function Block({ label, text }: { label: string; text?: string | undefined }) {
-  return (
-    <section className="border-t border-border py-8">
-      <p className="label-mono">{label}</p>
-      {text?.trim() ? (
-        <p className="mt-3 max-w-3xl whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
-          {text}
-        </p>
-      ) : (
-        <p className="mt-3 text-sm text-muted-foreground">
-          Not yet published. This section is maintained by Zamzam Capital and will appear here once
-          set in the admin portal.
-        </p>
-      )}
-    </section>
-  );
-}
+const ratios = [
+  { name: "Interest-bearing debt", rule: "Less than 33% of total assets" },
+  { name: "Non-compliant investments", rule: "Less than 33% of total assets" },
+  { name: "Non-Halal revenue", rule: "Less than 5% of total revenue" },
+  { name: "Non-liquid assets", rule: "At least 20% of total assets" },
+  { name: "Market capitalization", rule: "Greater than net liquid assets" },
+];
 
 function MethodologyPage() {
-  const { data } = useQuery({
-    queryKey: ["settings", "methodology"],
-    queryFn: () => getSetting<Methodology>("methodology"),
-  });
   const { data: dataset } = useQuery({
     queryKey: ["dataset", "active"],
     queryFn: getActiveDataset,
@@ -63,38 +35,62 @@ function MethodologyPage() {
     <SiteShell>
       <PageHeader
         eyebrow="Methodology"
-        title="Our Shariah Screening Approach"
-        intro="Classifications on this platform are based on Zamzam Capital's selected methodology and maintained data."
+        title="Our Shariah Screening Framework"
+        intro="Zamzam Capital's published approach reviews business activities, financial ratios and qualitative factors."
       />
       <div className="mx-auto max-w-4xl px-5 pb-20 sm:px-6">
-        {data?.intro ? (
-          <p className="py-8 text-base leading-relaxed text-muted-foreground">{data.intro}</p>
-        ) : null}
-        <Block label="Business activity screening" text={data?.business_activity} />
-        <Block label="Financial screening" text={data?.financial} />
-        <Block label="Thresholds &amp; criteria" text={data?.thresholds} />
-        <Block label="Data updates" text={data?.data_updates} />
+        <section className="border-t border-border py-9">
+          <p className="label-mono">Stage 01</p>
+          <h2 className="mt-3 text-xl font-semibold">Business sector check</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            The published framework checks whether the company&apos;s main business sector or industry
+            (more than 50%) is Halal. It lists banking and finance, investments, insurance, alcohol,
+            impermissible entertainment, pork, gambling and tobacco as non-Halal sectors.
+          </p>
+        </section>
 
-        <section className="mt-8 rounded-xl border border-border glass p-6">
-          <p className="label-mono">Current dataset</p>
-          <dl className="mt-4 grid grid-cols-2 gap-6 sm:grid-cols-4">
-            <div>
-              <dt className="label-mono">Version</dt>
-              <dd className="mt-1 font-mono text-sm">{dataset?.version ?? "—"}</dd>
-            </div>
-            <div>
-              <dt className="label-mono">Records</dt>
-              <dd className="mt-1 font-mono text-sm">{dataset?.record_count ?? "—"}</dd>
-            </div>
-            <div>
-              <dt className="label-mono">Last screening date</dt>
-              <dd className="mt-1 font-mono text-sm">{formatDate(dataset?.published_at)}</dd>
-            </div>
-            <div>
-              <dt className="label-mono">Source</dt>
-              <dd className="mt-1 font-mono text-sm">Zamzam Capital</dd>
-            </div>
+        <section className="border-t border-border py-9">
+          <p className="label-mono">Stage 02</p>
+          <h2 className="mt-3 text-xl font-semibold">Financial ratio check</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Companies that pass the sector check must satisfy all five published financial criteria.
+          </p>
+          <dl className="mt-6 divide-y divide-border border-y border-border">
+            {ratios.map((ratio) => (
+              <div key={ratio.name} className="grid gap-1 py-3 text-sm sm:grid-cols-2 sm:gap-6">
+                <dt className="font-medium">{ratio.name}</dt>
+                <dd className="text-muted-foreground">{ratio.rule}</dd>
+              </div>
+            ))}
           </dl>
+        </section>
+
+        <section className="border-t border-border py-9">
+          <p className="label-mono">Stage 03</p>
+          <h2 className="mt-3 text-xl font-semibold">Qualitative screening check</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            The final review looks deeper into business activities that may be Shariah non-compliant.
+            Zamzam Capital says it takes the cautious approach when there is doubt or insufficient
+            information. A company may be classified non-Halal at the sector, financial or
+            qualitative stage.
+          </p>
+        </section>
+
+        <section className="border-t border-border py-9">
+          <p className="label-mono">Current screening data</p>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            This screener displays classifications from the currently published Zamzam Capital
+            dataset. It does not recalculate the framework from Chartink or Screener.in figures,
+            or infer a status when no record exists.
+          </p>
+          <dl className="mt-6 grid grid-cols-2 gap-6 text-sm sm:grid-cols-3">
+            <div><dt className="label-mono">Version</dt><dd className="mt-1 font-mono">{dataset?.version ?? "—"}</dd></div>
+            <div><dt className="label-mono">Records</dt><dd className="mt-1 font-mono">{dataset?.record_count ?? "—"}</dd></div>
+            <div><dt className="label-mono">Published</dt><dd className="mt-1 font-mono">{formatDate(dataset?.published_at)}</dd></div>
+          </dl>
+          <a href="https://zamzam-capital.com/" target="_blank" rel="noreferrer noopener" className="mt-7 inline-block text-sm font-medium text-primary hover:underline">
+            Read the framework on Zamzam Capital&apos;s website ↗
+          </a>
         </section>
       </div>
     </SiteShell>
