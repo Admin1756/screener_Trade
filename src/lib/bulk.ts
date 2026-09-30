@@ -11,6 +11,8 @@ export type BulkEntry = {
   scannerName?: string | null;
   scannerClose?: string | null;
   scannerChange?: string | null;
+  /** Source columns shown exactly as the source listed them. */
+  cells?: string[];
   stock: StockRecord | null;
   status: ComplianceStatus | "NOT_AVAILABLE";
 };
@@ -39,11 +41,11 @@ export async function lookupMany(symbols: string[]): Promise<Map<string, StockRe
       .from("stocks")
       .select(SELECT_COLUMNS)
       .or(
-        `symbol.in.(${chunk.join(",")}),nse_symbol.in.(${chunk.join(",")}),charting_symbol.in.(${chunk.join(",")})`,
+        `symbol.in.(${chunk.join(",")}),nse_symbol.in.(${chunk.join(",")}),charting_symbol.in.(${chunk.join(",")}),bse_symbol.in.(${chunk.join(",")})`,
       );
     if (error) throw error;
     for (const row of (data ?? []) as StockRecord[]) {
-      for (const key of [row.symbol, row.nse_symbol, row.charting_symbol]) {
+      for (const key of [row.symbol, row.nse_symbol, row.charting_symbol, row.bse_symbol]) {
         if (key) found.set(key.toUpperCase(), row);
       }
     }
@@ -52,7 +54,7 @@ export async function lookupMany(symbols: string[]): Promise<Map<string, StockRe
 }
 
 export async function checkBulk(
-  items: { symbol: string; name?: string | null; close?: string | null; change?: string | null }[],
+  items: { symbol: string; name?: string | null; close?: string | null; change?: string | null; cells?: string[] }[],
 ): Promise<BulkEntry[]> {
   const map = await lookupMany(items.map((i) => i.symbol));
   return items.map((item, index) => {
@@ -63,6 +65,7 @@ export async function checkBulk(
       scannerName: item.name ?? null,
       scannerClose: item.close ?? null,
       scannerChange: item.change ?? null,
+      cells: item.cells,
       stock,
       status: stock?.status ?? "NOT_AVAILABLE",
     };
