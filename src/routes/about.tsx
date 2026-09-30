@@ -41,16 +41,14 @@ function AboutPage() {
         ) : (
           <>
             <p>
-              Zamzam Capital is focused on making Shariah-focused stock research simpler, faster and
-              more accessible. Investors who want to align their portfolios with Shariah principles
-              often have to work through scattered sources and inconsistent information. We bring
-              that into one place.
+              Zamzam Capital is a SEBI-registered research analyst focused on Shariah-compliant equity
+              research in India (registration INH000016199). Its work brings together capital-market
+              research and Islamic finance to help investors assess listed companies.
             </p>
             <p>
-              Our platform lets you look up a stock by company name, symbol, exchange code or a
-              supported charting link, and see the compliance status recorded in our maintained
-              screening dataset — along with the business-activity and financial screening results
-              behind it.
+              This screener lets you paste a public Chartink technical screen, a Screener.in
+              fundamental screen, or your own list of symbols. It preserves the source order and
+              available figures, while Shariah classifications come from our maintained dataset.
             </p>
             <p>
               Every result shown is read directly from the currently published dataset. We do not
@@ -61,6 +59,9 @@ function AboutPage() {
         <p className="border-t border-border pt-5 text-xs">
           Zamzam Capital does not provide guarantees of investment performance or financial return,
           and nothing on this platform constitutes personalized investment advice.
+        </p>
+        <p className="text-xs">
+          <a href="https://zamzam-capital.com/about/" target="_blank" rel="noreferrer noopener" className="text-primary hover:underline">Read more on the official Zamzam Capital website ↗</a>
         </p>
       </section>
     </SiteShell>
