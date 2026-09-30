@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import candleVideo from "@/assets/candlestick-loop.mp4.asset.json";
+import candleWebm from "@/assets/candlestick-loop.webm.asset.json";
 
 /** Decorative, illustrative price chart; never presented as live market data. */
 export function MarketBackground() {
@@ -21,14 +22,16 @@ export function MarketBackground() {
       <video
         ref={videoRef}
         className="market-video absolute inset-x-0 top-0 w-full object-cover object-center"
-        src={candleVideo.url}
         autoPlay
         loop
         muted
         playsInline
         preload="metadata"
         tabIndex={-1}
-      />
+      >
+        <source src={candleWebm.url} type="video/webm" />
+        <source src={candleVideo.url} type="video/mp4" />
+      </video>
       <div className="market-video-wash absolute inset-x-0 top-0" />
       <div className="absolute inset-0 grid-backdrop opacity-40" />
     </div>
