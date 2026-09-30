@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
+import { ThemeToggle } from "./ThemeToggle";
+import { Button } from "@/components/ui/button";
 
 const NAV = [
   { to: "/", label: "Screener" },
@@ -17,7 +19,9 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-6">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img src={zamzamLogo.url} alt="" className="size-9 shrink-0 object-contain" />
+          <span className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-panel p-0.5">
+            <img src={zamzamLogo.url} alt="" className="size-full object-contain" />
+          </span>
           <span className="leading-none">
             <span className="block text-sm font-semibold tracking-tight">Zamzam Capital</span>
             <span className="label-mono mt-1 block">Shariah Screener</span>
@@ -39,14 +43,17 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
+          <ThemeToggle />
+          <Button
             type="button"
+            variant="outline"
+            size="icon"
             aria-label="Toggle navigation"
             onClick={() => setOpen((v) => !v)}
-            className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground md:hidden"
+            className="text-muted-foreground md:hidden"
           >
             {open ? <X className="size-4" /> : <Menu className="size-4" />}
-          </button>
+          </Button>
         </div>
       </div>
 

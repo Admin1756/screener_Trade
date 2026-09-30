@@ -4,6 +4,8 @@ import { Loader2, LogOut, ShieldAlert } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { DatabaseUploader } from "@/components/admin/DatabaseUploader";
 import { formatDate } from "@/lib/stocks";
+import { ThemeToggle } from "@/components/site/ThemeToggle";
+import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -114,12 +116,13 @@ function AdminPage() {
       <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-6">
           <div className="flex items-center gap-3">
-            <span className="grid size-8 place-items-center rounded-md bg-primary/15 ring-1 ring-primary/30">
-              <span className="font-mono text-xs font-semibold text-primary">Z</span>
+            <span className="grid size-10 place-items-center overflow-hidden rounded-sm border border-border bg-panel p-0.5">
+              <img src={zamzamLogo.url} alt="" className="size-full object-contain" />
             </span>
             <span className="text-sm font-semibold tracking-tight">Zamzam Capital Admin</span>
           </div>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <span className="hidden font-mono text-[11px] text-muted-foreground sm:inline">
               {email}
             </span>
