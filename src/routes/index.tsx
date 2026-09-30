@@ -25,7 +25,9 @@ function Home() {
         <MarketBackground />
         <div className="relative mx-auto max-w-5xl px-5 pb-12 pt-10 sm:px-6 sm:pb-20 sm:pt-16">
           <div className="flex items-center gap-4">
-            <img src={zamzamLogo.url} alt="Zamzam Capital logo" className="size-14 shrink-0 object-contain sm:size-16" />
+            <span className="grid size-16 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-panel p-1 sm:size-20">
+              <img src={zamzamLogo.url} alt="Zamzam Capital logo" className="size-full object-contain" />
+            </span>
             <div>
               <p className="text-lg font-semibold sm:text-xl">Zamzam Capital</p>
               <p className="label-mono mt-1">Shariah stock screening</p>
