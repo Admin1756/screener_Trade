@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { BarChart3, LineChart, ListChecks, Loader2 } from "lucide-react";
 import { fetchChartinkScan } from "@/lib/chartink.functions";
 import { fetchScreenerScreen } from "@/lib/screener.functions";
+import { getSharedStocks } from "@/lib/ai-capital.functions";
 import { checkBulk, parseSymbolList, summarise, type BulkEntry } from "@/lib/bulk";
 import { STATUS_LABEL, type ComplianceStatus } from "@/lib/stocks";
 import { cn } from "@/lib/utils";
@@ -50,6 +51,7 @@ function RowSkeleton() {
 export function BulkChecker() {
   const runChartink = useServerFn(fetchChartinkScan);
   const runScreener = useServerFn(fetchScreenerScreen);
+  const loadStocks = useServerFn(getSharedStocks);
   const [mode, setMode] = useState<Mode>("chartink");
   const [link, setLink] = useState("");
   const [list, setList] = useState("");
@@ -75,12 +77,13 @@ export function BulkChecker() {
         setStage("Checking Shariah status…");
         setColumns(["BSE Code", "Close", "% Chg", "Volume"]);
         setEntries(
-          await checkBulk(
+          checkBulk(
             r.rows.map((row) => ({
               symbol: row.symbol,
               name: row.name,
               cells: [row.bse_code ?? "—", row.close ?? "—", row.percent_change ?? "—", row.volume ?? "—"],
             })),
+            await loadStocks({ data: { symbols: r.rows.map((row) => row.symbol) } }),
           ),
         );
         setNote(`Chartink · ${r.slug} — order kept exactly as the scanner returned it (top mover first).`);
@@ -94,7 +97,7 @@ export function BulkChecker() {
         if (!r.rows.length) return setError("That screen returned no stocks right now.");
         setStage("Checking Shariah status…");
         setColumns(r.columns);
-        setEntries(await checkBulk(r.rows.map((row) => ({ symbol: row.symbol, name: row.name, cells: row.cells }))));
+        setEntries(checkBulk(r.rows.map((row) => ({ symbol: row.symbol, name: row.name, cells: row.cells })), await loadStocks({ data: { symbols: r.rows.map((row) => row.symbol) } })));
         setNote(`Screener.in · ${r.title} — columns and order exactly as listed on the screen.`);
         return;
       }
@@ -102,10 +105,10 @@ export function BulkChecker() {
       if (!symbols.length) return setError("Paste at least one stock symbol.");
       setStage("Checking Shariah status…");
       setColumns([]);
-      setEntries(await checkBulk(symbols.map((symbol) => ({ symbol }))));
+      setEntries(checkBulk(symbols.map((symbol) => ({ symbol })), await loadStocks({ data: { symbols } })));
       setNote(`${symbols.length} symbols checked in the order you pasted them.`);
     } catch {
-      setError("Something went wrong while checking these stocks. Please try again.");
+      setError("The stock database is unavailable. Please try again.");
     } finally {
       setBusy(false);
       setStage("");
@@ -269,7 +272,7 @@ export function BulkChecker() {
 
             <p className="text-xs text-muted-foreground">
               Market figures are shown exactly as the source listed them. Compliance status always comes from the
-              current Zamzam Capital database — stocks not in it are shown as Not Available, never estimated.
+               current Zamzam AI Capital stock list — stocks not in it are shown as Not Available, never estimated.
             </p>
           </div>
         ) : null}

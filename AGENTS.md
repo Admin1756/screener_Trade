@@ -12,4 +12,4 @@
 - Keep the bulk Chartink/Screener.in/list screener on `/`; redirect legacy `/check` and `/scanner` there so the retired single-stock search never reappears and old bookmarks still work.
 - Treat the published zamzam-capital.com site as the source for official public profile links and company facts; never infer unpublished screening thresholds or imply third-party endorsement.
 - Keep dark as the default and persist light-mode choice locally through the shared theme toggle; CSS semantic tokens own both themes so every page remains consistent.
-- Zamzam AI Capital is a separate Lovable Cloud project with a different stock schema and authentication. Do not imply its uploads synchronize with this database without an explicitly approved secure integration.
+- Zamzam AI Capital's admin upload is the authoritative stock source; this site's bulk screener reads its public stock rows through a server-only read-only connection, and must never fall back to this site's separate stock table for compliance.
