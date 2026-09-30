@@ -15,6 +15,8 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "Learn about Zamzam Capital's research and Shariah-compliant investing approach.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutPage,
