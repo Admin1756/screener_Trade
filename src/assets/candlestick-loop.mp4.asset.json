@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "4f767d23-3a20-45c9-81d9-b4d51c4a96d7",
+  "asset_id": "e04ddef6-3e5b-4ec0-b3b9-4700370c0c07",
   "project_id": "48132a04-71b6-4f56-9984-7285bae92525",
-  "url": "/__l5e/assets-v1/4f767d23-3a20-45c9-81d9-b4d51c4a96d7/candlestick-loop.mp4",
-  "r2_key": "a/v1/48132a04-71b6-4f56-9984-7285bae92525/4f767d23-3a20-45c9-81d9-b4d51c4a96d7/candlestick-loop.mp4",
-  "original_filename": "candlestick-loop.mp4",
-  "size": 283794,
+  "url": "/__l5e/assets-v1/e04ddef6-3e5b-4ec0-b3b9-4700370c0c07/candlestick-loop-compatible.mp4",
+  "r2_key": "a/v1/48132a04-71b6-4f56-9984-7285bae92525/e04ddef6-3e5b-4ec0-b3b9-4700370c0c07/candlestick-loop-compatible.mp4",
+  "original_filename": "candlestick-loop-compatible.mp4",
+  "size": 244236,
   "content_type": "video/mp4",
-  "created_at": "2026-09-30T17:35:20Z"
+  "created_at": "2026-09-30T17:36:40Z"
 }
