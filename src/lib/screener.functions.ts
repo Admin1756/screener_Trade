@@ -52,7 +52,7 @@ function parsePage(html: string) {
     });
   }
   const pager = html.match(/<div data-paging="true">([\s\S]*?)<\/div>\s*<\/div>/)?.[1] ?? "";
-  const pages = [...pager.matchAll(/<a\b[^>]*href="[^"]*[?&]page=(\d+)[^"]*"/g)].map((match) => Number(match[1]));
+  const pages = [...pager.replace(/&amp;/g, "&").matchAll(/<a\b[^>]*href="[^"]*[?&]page=(\d+)[^"]*"/g)].map((match) => Number(match[1]));
   return { headers, rows, lastPage: Math.max(1, ...pages) };
 }
 
