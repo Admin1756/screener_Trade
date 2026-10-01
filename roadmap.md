@@ -8,3 +8,5 @@
 - [x] Refresh About and Connect in graphite-and-teal editorial bands with Sora and Manrope.
 - [x] Make Stock Analysis Screeners by Zamzam Capital the main title and the Shariah-status line its subtitle.
 - [x] Match the supplied About and Connect card layout while retaining only verified official profiles.
+- [x] Tighten About and Connect badge/card spacing for mobile without changing their order.
+- [x] Test public Chartink and Screener.in links and prevent silent partial screen results; private links still require authorized access.

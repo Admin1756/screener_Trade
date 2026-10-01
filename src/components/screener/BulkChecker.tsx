@@ -109,7 +109,7 @@ export function BulkChecker() {
       setEntries(checkBulk(symbols.map((symbol) => ({ symbol })), await loadStocks({ data: { symbols } })));
       setNote(`${symbols.length} symbols checked in the order you pasted them.`);
     } catch {
-      setError("The stock database is unavailable. Please try again.");
+      setError(mode === "list" ? "The stock database is unavailable. Please try again." : "The screen could not be reached right now. Try again or paste its symbols in Bulk list.");
     } finally {
       setBusy(false);
       setStage("");
