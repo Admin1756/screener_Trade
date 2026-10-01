@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHeader, SiteShell } from "@/components/site/SiteShell";
+import { SiteShell } from "@/components/site/SiteShell";
+import { AboutSection } from "@/components/site/CompanySections";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -23,39 +24,5 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
-  return (
-    <SiteShell>
-      <PageHeader
-        eyebrow="About"
-        title="About Zamzam Capital"
-        intro="Research and Shariah screening for investors in Indian equities."
-      />
-      <section className="mx-auto max-w-3xl space-y-5 px-5 py-16 text-sm leading-relaxed text-muted-foreground sm:px-6">
-        <p>
-          Zamzam Capital is a SEBI-registered Research Analyst (INH000016199; BSE enlistment
-          6158). Founded by Saif Ahmed, the firm brings together market research and
-          Shariah-compliant investing.
-        </p>
-        <p>
-          Its published approach combines fundamental and technical analysis with Shariah
-          screening. The firm also offers research-led stock plans and long-term model portfolios.
-          It says its Shariah screening follows three stages: business sector, financial ratios,
-          and qualitative review.
-        </p>
-        <p>
-          On this site, you can paste a public Chartink technical scan, a Screener.in fundamental
-          screen, or a list of symbols. Stocks stay in the source order, with the recorded
-          compliance status shown beside each name. Results come only from the current uploaded
-          Zamzam Capital dataset; stocks absent from it are marked Not Available.
-        </p>
-        <p className="border-t border-border pt-5 text-xs">
-          Zamzam Capital does not provide guarantees of investment performance or financial return,
-          and nothing on this platform constitutes personalized investment advice.
-        </p>
-        <p className="text-xs">
-          <a href="https://zamzam-capital.com/" target="_blank" rel="noreferrer noopener" className="text-primary hover:underline">Visit the official Zamzam Capital website ↗</a>
-        </p>
-      </section>
-    </SiteShell>
-  );
+  return <SiteShell><AboutSection /></SiteShell>;
 }

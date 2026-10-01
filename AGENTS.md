@@ -13,4 +13,5 @@
 - Treat the published zamzam-capital.com site as the source for official public profile links and company facts; never infer unpublished screening thresholds or imply third-party endorsement.
 - Keep dark as the default and persist light-mode choice locally through the shared theme toggle; CSS semantic tokens own both themes so every page remains consistent.
 - Zamzam AI Capital's admin upload is the authoritative stock source; this site's bulk screener reads its public stock rows through a server-only read-only connection, and must never fall back to this site's separate stock table for compliance.
-- The homepage's candlestick video is decorative and illustrative, not live price data; keep it muted, motion-preference aware, and visually subordinate to the screener.
+- The homepage's layered market videos are decorative and illustrative, not live price data; keep them muted, looping, motion-preference aware, and visually subordinate to the screener.
+- Reuse shared About and Connect sections on the homepage and their standalone pages so public company details and official profiles stay consistent.

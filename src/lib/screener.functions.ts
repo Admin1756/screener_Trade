@@ -75,12 +75,12 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
     try {
       first = await get(1);
     } catch {
-      return { ok: false, reason: "That screen could not be opened. Is it public?" };
+      return { ok: false, reason: "That screen could not be opened. If it requires sign-in, paste its symbols in Bulk list instead." };
     }
     const title = clean(first.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? "Screener.in screen");
     const p1 = parsePage(first);
     if (p1.headers.length === 0) {
-      return { ok: false, reason: "No results table was found on this screen. Only public screens work." };
+      return { ok: false, reason: "No results table was found. Private screens require sign-in on Screener.in; paste their symbols in Bulk list instead." };
     }
     const rows = [...p1.rows];
     const last = Math.min(p1.lastPage, MAX_PAGES);
