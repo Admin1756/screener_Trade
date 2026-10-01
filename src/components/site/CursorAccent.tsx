@@ -1,15 +1,16 @@
 import { useEffect, useRef } from "react";
 
-/** A decorative pointer follower; the browser cursor and all controls remain unchanged. */
+/** A fading light follower; the browser cursor and all controls remain unchanged. */
 export function CursorAccent() {
-  const ringRef = useRef<HTMLDivElement>(null);
+  const lightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ring = ringRef.current;
-    if (!ring) return;
+    const light = lightRef.current;
+    if (!light) return;
 
     const motion = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
     let frame = 0;
+    let fadeTimer = 0;
     let x = 0;
     let y = 0;
     let targetX = 0;
@@ -17,10 +18,14 @@ export function CursorAccent() {
     let ready = false;
 
     const animate = () => {
-      x += (targetX - x) * 0.22;
-      y += (targetY - y) * 0.22;
-      ring.style.translate = `${x}px ${y}px`;
-      frame = requestAnimationFrame(animate);
+      x += (targetX - x) * 0.28;
+      y += (targetY - y) * 0.28;
+      light.style.translate = `${x}px ${y}px`;
+      if (Math.abs(targetX - x) > 0.1 || Math.abs(targetY - y) > 0.1) {
+        frame = requestAnimationFrame(animate);
+      } else {
+        frame = 0;
+      }
     };
 
     const onMove = (event: PointerEvent) => {
@@ -31,13 +36,14 @@ export function CursorAccent() {
         x = targetX;
         y = targetY;
         ready = true;
-        frame = requestAnimationFrame(animate);
       }
-      ring.classList.add("cursor-accent-visible");
-      ring.classList.toggle("cursor-accent-link", Boolean((event.target as Element | null)?.closest("a, button, input, textarea, select, [role='button'], [role='tab']")));
+      if (!frame) frame = requestAnimationFrame(animate);
+      light.classList.add("cursor-accent-visible");
+      window.clearTimeout(fadeTimer);
+      fadeTimer = window.setTimeout(hide, 550);
     };
 
-    const hide = () => ring.classList.remove("cursor-accent-visible");
+    const hide = () => light.classList.remove("cursor-accent-visible");
     const onOut = (event: MouseEvent) => {
       if (!event.relatedTarget) hide();
     };
@@ -55,8 +61,9 @@ export function CursorAccent() {
       window.removeEventListener("blur", hide);
       motion.removeEventListener("change", onPreferenceChange);
       cancelAnimationFrame(frame);
+      window.clearTimeout(fadeTimer);
     };
   }, []);
 
-  return <div ref={ringRef} className="cursor-accent" aria-hidden="true" />;
+  return <div ref={lightRef} className="cursor-accent" aria-hidden="true" />;
 }

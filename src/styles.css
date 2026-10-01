@@ -174,21 +174,19 @@
   .cursor-accent {
     display: block;
     position: fixed;
-    z-index: 100;
-    top: -19px;
-    left: -19px;
-    width: 38px;
-    height: 38px;
-    border: 1px solid var(--primary);
+    z-index: 40;
+    top: -48px;
+    left: -48px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
-    box-shadow: 0 0 18px color-mix(in oklab, var(--primary) 28%, transparent);
+    background: radial-gradient(circle, color-mix(in oklab, var(--primary) 24%, transparent) 0%, color-mix(in oklab, var(--primary) 8%, transparent) 32%, transparent 70%);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 180ms ease, scale 220ms ease, background-color 220ms ease;
+    transition: opacity 350ms ease-out;
   }
 
-  .cursor-accent-visible { opacity: 0.75; }
-  .cursor-accent-link { scale: 1.45; background-color: color-mix(in oklab, var(--primary) 12%, transparent); }
+  .cursor-accent-visible { opacity: 1; }
 }
 
 .market-video,
