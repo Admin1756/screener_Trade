@@ -16,3 +16,4 @@
 - The homepage randomly selects only one of its market videos per visit; these are decorative and illustrative, not live price data, and must remain muted, looping, motion-preference aware, and visually subordinate to the screener.
 - Reuse shared About and Connect sections on the homepage and their standalone pages so public company details and official profiles stay consistent.
 - Keep Screener, Methodology, About, and Connect in one linear homepage flow, with homepage navigation scrolling to those sections; retain standalone section URLs for existing bookmarks.
+- Style the shared About and Connect sections as graphite-and-teal editorial bands with Sora headings and Manrope body text; keep the official facts and profile links unchanged so the design stays credible.
