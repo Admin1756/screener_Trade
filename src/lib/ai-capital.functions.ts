@@ -20,10 +20,18 @@ const statusOf = (value: string): ComplianceStatus => {
 };
 
 export const getSharedStocks = createServerFn({ method: "POST" })
-  .inputValidator((data) => z.object({ symbols: z.array(z.string().regex(/^[A-Za-z0-9&.-]{1,30}$/)).max(3000) }).parse(data))
+  .validator((data) => z.object({ symbols: z.array(z.string().max(60)).max(3000) }).parse(data))
   .handler(async ({ data }): Promise<SharedStock[]> => {
     const { aiCapitalPublicUrl, aiCapitalPublishableKey } = await import("./ai-capital-public.server");
-    const symbols = [...new Set(data.symbols.map((s) => s.toUpperCase()))];
+    // Normalise HTML-encoded ampersands (e.g. "M&amp;M") and skip anything that
+    // still isn't a plain symbol, so one odd row never fails the whole screen.
+    const symbols = [
+      ...new Set(
+        data.symbols
+          .map((s) => s.replace(/&amp;/gi, "&").trim().toUpperCase())
+          .filter((s) => /^[A-Z0-9&._-]{1,30}$/.test(s)),
+      ),
+    ];
     const results: SharedStock[] = [];
     for (let i = 0; i < symbols.length; i += 150) {
       const chunk = symbols.slice(i, i + 150);
