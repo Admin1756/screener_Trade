@@ -58,6 +58,48 @@ function parsePage(html: string) {
   return { headers, rows, lastPage: Math.max(1, ...pages) };
 }
 
+function readCookies(res: Response, jar: Map<string, string>) {
+  const list = (res.headers as Headers & { getSetCookie?: () => string[] }).getSetCookie?.() ?? [res.headers.get("set-cookie") ?? ""];
+  for (const c of list) {
+    const m = c.match(/^\s*([^=;\s]+)=([^;]*)/);
+    if (m) jar.set(m[1]!, m[2]!);
+  }
+}
+
+/** Signs in with the site owner's Screener.in account (if configured) so private screens can be read. */
+async function screenerLogin(): Promise<string | null> {
+  const email = process.env["SCREENER_EMAIL"];
+  const password = process.env["SCREENER_PASSWORD"];
+  if (!email || !password) return null;
+  try {
+    const jar = new Map<string, string>();
+    const loginUrl = "https://www.screener.in/login/";
+    const page = await fetch(loginUrl, { headers: { "user-agent": UA }, signal: AbortSignal.timeout(20000) });
+    readCookies(page, jar);
+    const html = await page.text();
+    const token = html.match(/name="csrfmiddlewaretoken"\s+value="([^"]+)"/)?.[1] ?? jar.get("csrftoken");
+    if (!token) return null;
+    const res = await fetch(loginUrl, {
+      method: "POST",
+      redirect: "manual",
+      headers: {
+        "user-agent": UA,
+        "content-type": "application/x-www-form-urlencoded",
+        referer: loginUrl,
+        origin: "https://www.screener.in",
+        cookie: [...jar].map(([k, v]) => `${k}=${v}`).join("; "),
+      },
+      body: new URLSearchParams({ csrfmiddlewaretoken: token, username: email, password }),
+      signal: AbortSignal.timeout(20000),
+    });
+    readCookies(res, jar);
+    if (!jar.get("sessionid")) return null;
+    return [...jar].map(([k, v]) => `${k}=${v}`).join("; ");
+  } catch {
+    return null;
+  }
+}
+
 /** Reads a public Screener.in screen — every column and row, in the screen's own order. */
 export const fetchScreenerScreen = createServerFn({ method: "POST" })
   .validator((data: { link: string }) => {
@@ -68,12 +110,13 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
     const base = screenUrl(data.link);
     if (!base) return { ok: false, reason: "That is not a Screener.in screen link (screener.in/screens/...)." };
 
+    const cookie = await screenerLogin();
     const get = async (page: number) => {
       const url = new URL(base);
       if (page > 1) url.searchParams.set("page", String(page));
       let res: Response | undefined;
       for (let attempt = 0; attempt < 4; attempt++) {
-        res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml", "accept-language": "en-US,en;q=0.9" }, signal: AbortSignal.timeout(25000) });
+        res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml", "accept-language": "en-US,en;q=0.9", ...(cookie ? { cookie } : {}) }, signal: AbortSignal.timeout(25000) });
         if (res.status !== 429) break;
         await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
       }
