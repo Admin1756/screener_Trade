@@ -109,7 +109,7 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
     if (!csrf || !clauseRaw) {
       return {
         ok: false,
-        reason: "This scanner's conditions could not be read. Only public Chartink scans work.",
+        reason: "This scanner's conditions could not be read. If it requires sign-in, paste its symbols in Bulk list instead.",
       };
     }
 

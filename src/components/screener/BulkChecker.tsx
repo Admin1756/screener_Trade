@@ -7,6 +7,7 @@ import { getSharedStocks } from "@/lib/ai-capital.functions";
 import { checkBulk, parseSymbolList, summarise, type BulkEntry } from "@/lib/bulk";
 import { STATUS_LABEL, type ComplianceStatus } from "@/lib/stocks";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type Mode = "chartink" | "screener" | "list";
 
@@ -124,9 +125,10 @@ export function BulkChecker() {
       <div className="rounded-2xl border border-border glass p-2">
         <div className="grid grid-cols-3 gap-1 p-1.5">
           {MODES.map((m) => (
-            <button
+            <Button
               key={m.id}
               type="button"
+              variant="ghost"
               onClick={() => {
                 setMode(m.id);
                 setError(null);
@@ -141,7 +143,7 @@ export function BulkChecker() {
               <span className="hidden font-mono text-[10px] uppercase tracking-wider text-muted-foreground lg:inline">
                 · {m.hint}
               </span>
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -149,7 +151,7 @@ export function BulkChecker() {
           {mode !== "list" ? (
             <>
               <label htmlFor="zz-scan" className="label-mono">
-                {mode === "chartink" ? "Public Chartink scanner link" : "Public Screener.in screen link"}
+                 {mode === "chartink" ? "Chartink scanner link" : "Screener.in screen link"}
               </label>
               <input
                 id="zz-scan"
@@ -176,7 +178,7 @@ export function BulkChecker() {
             </>
           )}
 
-          <button
+           <Button
             type="button"
             disabled={busy}
             onClick={() => void run()}
@@ -184,8 +186,8 @@ export function BulkChecker() {
           >
             {busy ? <Loader2 className="size-4 animate-spin" /> : null}
             {busy ? stage || "Working…" : mode === "list" ? "Check List" : "Analyze & Check Compliance"}
-          </button>
-          <p className="label-mono mt-3 text-center">Link support by Zamzam Capital · order preserved</p>
+           </Button>
+           <p className="mt-3 text-center text-xs text-muted-foreground">Links must be accessible without signing in. Private screens cannot be read from a link alone; paste their symbols in Bulk list instead.</p>
         </div>
       </div>
 
