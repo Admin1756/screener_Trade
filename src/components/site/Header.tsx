@@ -4,6 +4,7 @@ import { useState } from "react";
 import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
+import { DesktopNav } from "./DesktopNav";
 
 const NAV = [
   { hash: "screener", label: "Screener" },
@@ -28,18 +29,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
-          {NAV.map((item) => (
-            <Link
-              key={item.hash}
-              to="/"
-              hash={item.hash}
-              className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <DesktopNav />
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
