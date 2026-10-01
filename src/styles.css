@@ -152,8 +152,8 @@
   --sidebar-accent-foreground: oklch(0.24 0.03 173);
   --sidebar-border: oklch(0.35 0.02 170 / 17%);
   --sidebar-ring: oklch(0.47 0.12 165 / 55%);
-  --market-video-opacity: 0.3;
-  --trader-video-opacity: 0.2;
+  --market-video-opacity: 0.22;
+  --trader-video-opacity: 0.16;
   --company-ink: oklch(0.965 0.006 190);
   --company-accent: oklch(0.42 0.105 182);
   --company-copy: oklch(0.205 0.012 192);
@@ -181,6 +181,12 @@
   opacity: var(--trader-video-opacity);
   mix-blend-mode: screen;
   object-position: center 40%;
+}
+
+.light .market-video-candles,
+.light .market-video-trader {
+  mix-blend-mode: multiply;
+  filter: invert(1) hue-rotate(180deg) saturate(0.8) contrast(1.05);
 }
 
 .market-video-wash {

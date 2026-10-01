@@ -71,8 +71,14 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
     const get = async (page: number) => {
       const url = new URL(base);
       if (page > 1) url.searchParams.set("page", String(page));
-      const res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html" }, signal: AbortSignal.timeout(25000) });
-       if (res.status === 429) throw new Error("rate-limited");
+      let res: Response | undefined;
+      for (let attempt = 0; attempt < 4; attempt++) {
+        res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml", "accept-language": "en-US,en;q=0.9" }, signal: AbortSignal.timeout(25000) });
+        if (res.status !== 429) break;
+        await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      }
+      if (!res) throw new Error("no response");
+      if (res.status === 429) throw new Error("rate-limited");
        if (!res.ok || new URL(res.url).pathname.replace(/\/$/, "") !== base.pathname.replace(/\/$/, "")) throw new Error(String(res.status));
       return res.text();
     };
@@ -91,8 +97,8 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
     const rows = [...p1.rows];
     if (p1.lastPage > MAX_PAGES) return { ok: false, reason: "This screen is too large to read in one request. Paste its symbols in Bulk list instead." };
     try {
-      for (let start = 2; start <= p1.lastPage; start += 8) {
-        const pages = await Promise.all(Array.from({ length: Math.min(8, p1.lastPage - start + 1) }, (_, i) => get(start + i).then(parsePage)));
+      for (let start = 2; start <= p1.lastPage; start += 3) {
+        const pages = await Promise.all(Array.from({ length: Math.min(3, p1.lastPage - start + 1) }, (_, i) => get(start + i).then(parsePage)));
         for (const page of pages) {
           if (!page.headers.length || page.headers.join("|") !== p1.headers.join("|")) throw new Error("Missing or changed results table");
           rows.push(...page.rows);
