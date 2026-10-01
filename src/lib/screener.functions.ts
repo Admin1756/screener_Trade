@@ -29,7 +29,9 @@ function screenUrl(raw: string): URL | null {
     url.protocol = "https:";
     url.hostname = "www.screener.in";
     if (!url.pathname.endsWith("/")) url.pathname += "/";
-    url.searchParams.delete("page");
+    // Share links may carry tracking or a page/limit choice; read the full
+    // public screen from its default first page instead.
+    url.search = "";
     return url;
   } catch {
     return null;
@@ -70,6 +72,7 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
       const url = new URL(base);
       if (page > 1) url.searchParams.set("page", String(page));
       const res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html" }, signal: AbortSignal.timeout(25000) });
+       if (res.status === 429) throw new Error("rate-limited");
        if (!res.ok || new URL(res.url).pathname.replace(/\/$/, "") !== base.pathname.replace(/\/$/, "")) throw new Error(String(res.status));
       return res.text();
     };
@@ -77,8 +80,8 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
     let first: string;
     try {
       first = await get(1);
-    } catch {
-      return { ok: false, reason: "That screen could not be opened. If it requires sign-in, paste its symbols in Bulk list instead." };
+    } catch (error) {
+      return { ok: false, reason: error instanceof Error && error.message === "rate-limited" ? "Screener.in is limiting requests right now. Please try again later." : "That screen could not be opened. If it requires sign-in, paste its symbols in Bulk list instead." };
     }
     const title = clean(first.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? "Screener.in screen");
     const p1 = parsePage(first);
@@ -96,8 +99,8 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
         }
         if (rows.length > 3000) return { ok: false, reason: "This screen has more than 3,000 stocks. Paste a smaller screen or its symbols in Bulk list." };
       }
-    } catch {
-      return { ok: false, reason: "Some pages could not be read, so no incomplete results were shown. If this screen needs sign-in, paste its symbols in Bulk list." };
+    } catch (error) {
+      return { ok: false, reason: error instanceof Error && error.message === "rate-limited" ? "Screener.in is limiting requests for this screen. No incomplete results were shown; please try again later." : "Some pages could not be read, so no incomplete results were shown. If this screen needs sign-in, paste its symbols in Bulk list." };
     }
 
     return {
