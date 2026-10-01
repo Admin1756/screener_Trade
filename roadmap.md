@@ -13,3 +13,4 @@
 - [x] Keep Chartink and Screener.in inputs separate and support Chartink scan-run-token links using the working AI Capital flow.
 - [x] Repair public Screener.in shared-link normalization and pagination; verify complete ordered results in the live screener.
 - [x] Keep the homepage title on one line at desktop widths and add a subtle, reduced-motion-aware desktop cursor accent.
+- [ ] Replace the cursor ring with a soft fading light on desktop, retaining the native pointer and reduced-motion behavior.
