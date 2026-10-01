@@ -51,12 +51,9 @@ function parsePage(html: string) {
       cells: tds.slice(2).map(clean),
     });
   }
-  // Screener.in only displays a *window* of page numbers, not the final page.
-  // The Next link is the reliable indication that more results exist.
   const pager = html.match(/<div data-paging="true">([\s\S]*?)<\/div>\s*<\/div>/)?.[1] ?? "";
-  const nextPage = [...pager.matchAll(/<a\b[^>]*href="[^"]*[?&]page=(\d+)[^"]*"[^>]*>([\s\S]*?)<\/a>/g)]
-    .find((match) => /\bNext\b/i.test(clean(match[2] ?? "")));
-  return { headers, rows, nextPage: nextPage ? Number(nextPage[1]) : null };
+  const pages = [...pager.matchAll(/<a\b[^>]*href="[^"]*[?&]page=(\d+)[^"]*"/g)].map((match) => Number(match[1]));
+  return { headers, rows, lastPage: Math.max(1, ...pages) };
 }
 
 /** Reads a public Screener.in screen — every column and row, in the screen's own order. */
@@ -89,17 +86,16 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
       return { ok: false, reason: "No results table was found. Private screens require sign-in on Screener.in; paste their symbols in Bulk list instead." };
     }
     const rows = [...p1.rows];
+    if (p1.lastPage > MAX_PAGES) return { ok: false, reason: "This screen is too large to read in one request. Paste its symbols in Bulk list instead." };
     try {
-      let next = p1.nextPage;
-      for (let count = 1; next && count < MAX_PAGES; count++) {
-        const page = parsePage(await get(next));
-        if (!page.headers.length || page.headers.join("|") !== p1.headers.join("|")) throw new Error("Missing or changed results table");
-        rows.push(...page.rows);
+      for (let start = 2; start <= p1.lastPage; start += 8) {
+        const pages = await Promise.all(Array.from({ length: Math.min(8, p1.lastPage - start + 1) }, (_, i) => get(start + i).then(parsePage)));
+        for (const page of pages) {
+          if (!page.headers.length || page.headers.join("|") !== p1.headers.join("|")) throw new Error("Missing or changed results table");
+          rows.push(...page.rows);
+        }
         if (rows.length > 3000) return { ok: false, reason: "This screen has more than 3,000 stocks. Paste a smaller screen or its symbols in Bulk list." };
-        if (page.nextPage && page.nextPage <= next) throw new Error("Invalid pagination");
-        next = page.nextPage;
       }
-      if (next) return { ok: false, reason: "This screen is too large to read in one request. Paste its symbols in Bulk list instead." };
     } catch {
       return { ok: false, reason: "Some pages could not be read, so no incomplete results were shown. If this screen needs sign-in, paste its symbols in Bulk list." };
     }
