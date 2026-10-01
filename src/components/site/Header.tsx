@@ -24,7 +24,7 @@ export function Header() {
           </span>
           <span className="leading-none">
             <span className="block text-sm font-semibold tracking-tight">Zamzam Capital</span>
-            <span className="label-mono mt-1 block">Shariah Screener</span>
+             <span className="label-mono mt-1 block">STOCK ANALYSIS SCREENER</span>
           </span>
         </Link>
 
