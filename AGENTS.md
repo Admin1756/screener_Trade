@@ -19,3 +19,4 @@
 - Style shared About and Connect sections as reference-matched intro/badge/two-column feature cards followed by a centered community heading and two-column profile cards; keep official facts and links unchanged so the design stays credible.
 - Keep Chartink and Screener.in links in separate input state so switching tabs never submits a link to the wrong service; support Chartink's scan-run-token and clause forms while preserving returned row order.
 - Normalize public Screener.in screen URLs, read every listed page in source order, and reject partial results when access is blocked or rate-limited; otherwise a shared link can silently omit stocks.
+- Mount the decorative cursor accent in the shared site shell so it behaves consistently on public pages, and disable it for touch and reduced-motion users to preserve native interaction.
