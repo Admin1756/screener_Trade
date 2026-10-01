@@ -6,10 +6,10 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
-  { to: "/", label: "Screener" },
-  { to: "/methodology", label: "Methodology" },
-  { to: "/about", label: "About" },
-  { to: "/connect", label: "Connect" },
+  { hash: "screener", label: "Screener" },
+  { hash: "methodology", label: "Methodology" },
+  { hash: "about", label: "About" },
+  { hash: "connect", label: "Connect" },
 ] as const;
 
 export function Header() {
@@ -31,11 +31,10 @@ export function Header() {
         <nav className="hidden items-center gap-7 md:flex">
           {NAV.map((item) => (
             <Link
-              key={item.to}
-              to={item.to}
+              key={item.hash}
+              to="/"
+              hash={item.hash}
               className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "text-foreground" }}
-              activeOptions={{ exact: item.to === "/" }}
             >
               {item.label}
             </Link>
@@ -61,8 +60,9 @@ export function Header() {
         <nav className="border-t border-border bg-surface/90 px-5 py-3 md:hidden">
           {NAV.map((item) => (
             <Link
-              key={item.to}
-              to={item.to}
+              key={item.hash}
+              to="/"
+              hash={item.hash}
               onClick={() => setOpen(false)}
               className="block rounded-md px-2 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-panel hover:text-foreground"
             >

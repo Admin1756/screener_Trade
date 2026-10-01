@@ -3,6 +3,7 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { MarketBackground } from "@/components/site/MarketBackground";
 import { BulkChecker } from "@/components/screener/BulkChecker";
 import { AboutSection, ConnectSection } from "@/components/site/CompanySections";
+import { MethodologySection } from "@/components/site/MethodologySection";
 import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -24,17 +25,14 @@ function Home() {
     <SiteShell>
       <section className="relative overflow-hidden border-b border-border">
         <MarketBackground />
-         <div className="relative mx-auto max-w-5xl px-5 pb-8 pt-6 sm:px-6 sm:pb-16 sm:pt-14">
+          <div className="relative mx-auto max-w-5xl px-5 pb-8 pt-6 sm:px-6 sm:pb-16 sm:pt-14">
           <div className="flex items-center gap-4">
              <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-panel p-1 sm:size-20">
               <img src={zamzamLogo.url} alt="Zamzam Capital logo" className="size-full object-contain" />
             </span>
-            <div>
-              <p className="text-lg font-semibold sm:text-xl">Zamzam Capital</p>
-               <p className="label-mono mt-1 text-primary">STOCK ANALYSIS SCREENER</p>
-            </div>
+             <p className="text-lg font-semibold leading-snug sm:text-xl">Stock Analysis Screeners by <span className="text-primary">Zamzam Capital</span></p>
           </div>
-           <h1 className="mt-6 max-w-3xl text-4xl font-bold leading-tight sm:mt-8 sm:text-5xl">Zamzam Capital Stock Analysis Screeners</h1>
+            <h1 className="mt-6 max-w-3xl text-4xl font-bold leading-tight sm:mt-8 sm:text-5xl">Screen your stocks. See their Shariah status.</h1>
            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
              Bring technical and fundamental screens together. Paste a Chartink or Screener.in link, or a list of symbols, to see source-ordered market data alongside the recorded Shariah status.
           </p>
@@ -43,6 +41,7 @@ function Home() {
           </div>
         </div>
       </section>
+       <MethodologySection />
       <AboutSection />
       <ConnectSection />
     </SiteShell>
