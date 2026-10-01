@@ -65,6 +65,13 @@
   --color-company-connect: var(--company-connect);
   --color-company-icon-surface: var(--company-icon-surface);
   --color-company-icon-foreground: var(--company-icon-foreground);
+  --color-method-bg: var(--method-bg);
+  --color-method-copy: var(--method-copy);
+  --color-method-muted: var(--method-muted);
+  --color-method-rule: var(--method-rule);
+  --color-method-signal: var(--method-signal);
+  --color-method-secondary: var(--method-secondary);
+  --color-method-tertiary: var(--method-tertiary);
 }
 
 :root {
@@ -112,6 +119,21 @@
   --company-connect: oklch(0.235 0.018 180);
   --company-icon-surface: oklch(0.32 0.045 175);
   --company-icon-foreground: oklch(0.16 0.014 172);
+  --method-bg: oklch(0.19 0.038 256);
+  --method-copy: oklch(0.97 0.01 250);
+  --method-muted: oklch(0.79 0.024 247);
+  --method-rule: oklch(0.9 0.02 250 / 23%);
+  --method-signal: oklch(0.84 0.16 92);
+  --method-secondary: oklch(0.77 0.12 200);
+  --method-tertiary: oklch(0.79 0.15 30);
+  --feature-1: oklch(0.28 0.055 178);
+  --feature-2: oklch(0.32 0.061 230);
+  --feature-3: oklch(0.32 0.067 85);
+  --feature-4: oklch(0.32 0.062 28);
+  --profile-1: oklch(0.29 0.065 345);
+  --profile-2: oklch(0.29 0.07 27);
+  --profile-3: oklch(0.28 0.065 235);
+  --profile-4: oklch(0.29 0.06 200);
 }
 
 .dark {
@@ -163,10 +185,42 @@
   --company-connect: oklch(0.96 0.023 165);
   --company-icon-surface: oklch(0.93 0.032 165);
   --company-icon-foreground: oklch(1 0 0);
+  --method-bg: oklch(0.94 0.03 251);
+  --method-copy: oklch(0.2 0.035 254);
+  --method-muted: oklch(0.38 0.025 250);
+  --method-rule: oklch(0.28 0.04 250 / 22%);
+  --method-signal: oklch(0.48 0.14 75);
+  --method-secondary: oklch(0.4 0.09 205);
+  --method-tertiary: oklch(0.5 0.13 25);
+  --feature-1: oklch(0.9 0.065 178);
+  --feature-2: oklch(0.9 0.061 230);
+  --feature-3: oklch(0.93 0.07 85);
+  --feature-4: oklch(0.93 0.056 28);
+  --profile-1: oklch(0.92 0.06 345);
+  --profile-2: oklch(0.91 0.07 27);
+  --profile-3: oklch(0.92 0.05 235);
+  --profile-4: oklch(0.91 0.06 200);
 }
 
 .company-editorial { font-family: "Manrope", var(--font-sans); }
 .company-editorial h2, .company-editorial h3 { font-family: "Sora", var(--font-sans); }
+.method-section h2, .method-section h3 { font-family: "Sora", var(--font-sans); }
+.method-stage { transition: background-color 250ms ease; }
+.method-stage:hover { background: color-mix(in oklab, var(--method-signal) 7%, transparent); }
+.company-feature:nth-child(4n + 1) { background: var(--feature-1); }
+.company-feature:nth-child(4n + 2) { background: var(--feature-2); }
+.company-feature:nth-child(4n + 3) { background: var(--feature-3); }
+.company-feature:nth-child(4n + 4) { background: var(--feature-4); }
+.company-profile:nth-child(4n + 1) { background: var(--profile-1); }
+.company-profile:nth-child(4n + 2) { background: var(--profile-2); }
+.company-profile:nth-child(4n + 3) { background: var(--profile-3); }
+.company-profile:nth-child(4n + 4) { background: var(--profile-4); }
+.about-credential { box-shadow: 6px 6px 0 var(--company-accent); }
+.nav-glider { transition: transform 220ms cubic-bezier(.2,.75,.2,1), width 220ms cubic-bezier(.2,.75,.2,1), opacity 160ms ease; }
+.nav-magnetic { transition: transform 180ms ease-out, color 180ms ease; }
+@media (prefers-reduced-motion: reduce) {
+  .method-stage, .nav-glider, .nav-magnetic, .company-feature, .company-profile { transition: none; }
+}
 
 .market-video,
 .market-video-wash {
