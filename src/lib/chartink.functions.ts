@@ -70,7 +70,7 @@ function readScanJson(html: string): { atlas_query?: string; scan_run_token?: st
   const raw = html.match(/:scan-json="([\s\S]*?)"\s*(?:\n|>)/)?.[1];
   if (!raw) return null;
   try {
-    const parsed: unknown = JSON.parse(decodeClause(raw));
+    const parsed: unknown = JSON.parse(raw.replace(/&quot;/g, '"').replace(/&#039;|&apos;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&"));
     if (parsed && typeof parsed === "object") return parsed as { atlas_query?: string; scan_run_token?: string };
   } catch {
     // Older Chartink pages may expose only the legacy clause below.
