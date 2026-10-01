@@ -61,6 +61,10 @@
   --color-company-copy: var(--company-copy);
   --color-company-muted: var(--company-muted);
   --color-company-rule: var(--company-rule);
+  --color-company-card: var(--company-card);
+  --color-company-connect: var(--company-connect);
+  --color-company-icon-surface: var(--company-icon-surface);
+  --color-company-icon-foreground: var(--company-icon-foreground);
 }
 
 :root {
@@ -104,6 +108,10 @@
   --company-copy: oklch(0.93 0.012 190);
   --company-muted: oklch(0.7 0.025 190);
   --company-rule: oklch(0.93 0.012 190 / 19%);
+  --company-card: oklch(0.25 0.015 190);
+  --company-connect: oklch(0.235 0.018 180);
+  --company-icon-surface: oklch(0.32 0.045 175);
+  --company-icon-foreground: oklch(0.16 0.014 172);
 }
 
 .dark {
@@ -151,6 +159,10 @@
   --company-copy: oklch(0.205 0.012 192);
   --company-muted: oklch(0.43 0.025 190);
   --company-rule: oklch(0.205 0.012 192 / 19%);
+  --company-card: oklch(1 0 0);
+  --company-connect: oklch(0.96 0.023 165);
+  --company-icon-surface: oklch(0.93 0.032 165);
+  --company-icon-foreground: oklch(1 0 0);
 }
 
 .company-editorial { font-family: "Manrope", var(--font-sans); }
