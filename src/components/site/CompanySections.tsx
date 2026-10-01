@@ -16,7 +16,7 @@ const profiles = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="border-b border-border bg-background py-16 sm:py-20">
+    <section id="about" className="scroll-mt-16 border-b border-border bg-background py-16 sm:py-20">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-6 lg:grid-cols-[1.08fr_1fr] lg:gap-16">
         <div>
           <p className="label-mono text-primary">Who we are</p>
@@ -44,7 +44,7 @@ export function AboutSection() {
 
 export function ConnectSection() {
   return (
-    <section id="connect" className="bg-surface py-16 sm:py-20">
+    <section id="connect" className="scroll-mt-16 bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <p className="label-mono text-primary">Stay connected</p>
         <h2 className="mt-5 text-4xl font-semibold sm:text-5xl">Connect with Zamzam Capital</h2>

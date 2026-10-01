@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import candleVideo from "@/assets/candlestick-loop.mp4.asset.json";
 import candleWebm from "@/assets/candlestick-loop.webm.asset.json";
 import traderVideo from "@/assets/trader-background.webm.asset.json";
@@ -6,17 +6,16 @@ import traderVideo from "@/assets/trader-background.webm.asset.json";
 /** Decorative, illustrative price chart; never presented as live market data. */
 export function MarketBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const secondVideoRef = useRef<HTMLVideoElement>(null);
+  const [selection, setSelection] = useState<"candles" | "trader" | null>(null);
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const syncPlayback = () => {
       if (preference.matches) {
         videoRef.current?.pause();
-        secondVideoRef.current?.pause();
+        setSelection(null);
       } else {
-        videoRef.current?.play().catch(() => {});
-        secondVideoRef.current?.play().catch(() => {});
+        setSelection((current) => current ?? (Math.random() < 0.5 ? "candles" : "trader"));
       }
     };
     syncPlayback();
@@ -24,33 +23,34 @@ export function MarketBackground() {
     return () => preference.removeEventListener("change", syncPlayback);
   }, []);
 
+  useEffect(() => {
+    if (selection) videoRef.current?.play().catch(() => {});
+  }, [selection]);
+
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-      <video
-        ref={videoRef}
-        className="market-video market-video-candles absolute inset-x-0 top-0 w-full object-cover object-center"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        tabIndex={-1}
-      >
-        <source src={candleWebm.url} type="video/webm" />
-        <source src={candleVideo.url} type="video/mp4" />
-      </video>
-      <video
-        ref={secondVideoRef}
-        className="market-video market-video-trader absolute inset-x-0 top-0 w-full object-cover object-center"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        tabIndex={-1}
-      >
-        <source src={traderVideo.url} type="video/webm" />
-      </video>
+      {selection && (
+        <video
+          key={selection}
+          ref={videoRef}
+          className={`market-video ${selection === "candles" ? "market-video-candles" : "market-video-trader"} absolute inset-x-0 top-0 w-full object-cover object-center`}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          tabIndex={-1}
+        >
+          {selection === "candles" ? (
+            <>
+              <source src={candleWebm.url} type="video/webm" />
+              <source src={candleVideo.url} type="video/mp4" />
+            </>
+          ) : (
+            <source src={traderVideo.url} type="video/webm" />
+          )}
+        </video>
+      )}
       <div className="market-video-wash absolute inset-x-0 top-0" />
       <div className="absolute inset-0 grid-backdrop opacity-40" />
     </div>
