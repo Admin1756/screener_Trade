@@ -165,6 +165,13 @@
   }
 }
 
+@media (max-width: 639px) {
+  .market-video,
+  .market-video-wash {
+    height: 660px;
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);

@@ -24,9 +24,9 @@ function Home() {
     <SiteShell>
       <section className="relative overflow-hidden border-b border-border">
         <MarketBackground />
-        <div className="relative mx-auto max-w-5xl px-5 pb-12 pt-10 sm:px-6 sm:pb-20 sm:pt-16">
+         <div className="relative mx-auto max-w-5xl px-5 pb-8 pt-6 sm:px-6 sm:pb-16 sm:pt-14">
           <div className="flex items-center gap-4">
-            <span className="grid size-16 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-panel p-1 sm:size-20">
+             <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-panel p-1 sm:size-20">
               <img src={zamzamLogo.url} alt="Zamzam Capital logo" className="size-full object-contain" />
             </span>
             <div>
@@ -34,11 +34,11 @@ function Home() {
                <p className="label-mono mt-1 text-primary">STOCK ANALYSIS SCREENER</p>
             </div>
           </div>
-           <h1 className="mt-8 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">Zamzam Capital Stock Analysis Screeners</h1>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+           <h1 className="mt-6 max-w-3xl text-4xl font-bold leading-tight sm:mt-8 sm:text-5xl">Zamzam Capital Stock Analysis Screeners</h1>
+           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
              Bring technical and fundamental screens together. Paste a Chartink or Screener.in link, or a list of symbols, to see source-ordered market data alongside the recorded Shariah status.
           </p>
-          <div className="mt-8 border-t border-border pt-6 sm:mt-10">
+           <div className="mt-6 border-t border-border pt-5 sm:mt-10 sm:pt-6">
             <BulkChecker />
           </div>
         </div>

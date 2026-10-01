@@ -1,4 +1,4 @@
 - [x] Place About and Connect in a linear homepage sequence and match the supplied About layout.
 - [x] Update stock analysis screener wording and layer the supplied video with the looping candles.
 - [x] Clarify private Chartink/Screener.in link limitations without implying inaccessible results can be fetched.
-- [ ] Verify desktop/mobile layout, videos, and the screener flow.
+- [x] Verify desktop/mobile layout, videos, and the screener flow.
