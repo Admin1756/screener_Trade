@@ -18,3 +18,4 @@
 - Keep Screener, Methodology, About, and Connect in one linear homepage flow, with homepage navigation scrolling to those sections; retain standalone section URLs for existing bookmarks.
 - Style shared About and Connect sections as reference-matched intro/badge/two-column feature cards followed by a centered community heading and two-column profile cards; keep official facts and links unchanged so the design stays credible.
 - Keep Chartink and Screener.in links in separate input state so switching tabs never submits a link to the wrong service; support Chartink's scan-run-token and clause forms while preserving returned row order.
+- Normalize public Screener.in screen URLs, read every listed page in source order, and reject partial results when access is blocked or rate-limited; otherwise a shared link can silently omit stocks.
