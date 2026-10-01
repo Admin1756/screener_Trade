@@ -48,7 +48,7 @@ function parsePage(html: string) {
     const link = m[1]!.match(/href="\/company\/([^/"]+)\//);
     if (!link || tds.length < 2) continue;
     rows.push({
-      symbol: decodeURIComponent(link[1]!).toUpperCase(),
+      symbol: decodeURIComponent(link[1]!.replace(/&amp;/gi, "&")).toUpperCase(),
       name: clean(tds[1]!),
       cells: tds.slice(2).map(clean),
     });
