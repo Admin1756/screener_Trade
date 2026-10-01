@@ -6,3 +6,5 @@
 - [x] Make homepage navigation scroll to its sections while preserving direct section URLs.
 - [x] Remove the large screener image and the Current screening data block.
 - [x] Refresh About and Connect in graphite-and-teal editorial bands with Sora and Manrope.
+- [x] Make Stock Analysis Screeners by Zamzam Capital the main title and the Shariah-status line its subtitle.
+- [x] Match the supplied About and Connect card layout while retaining only verified official profiles.
