@@ -7,7 +7,7 @@ export type ScreenerResult =
 
 const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36";
-const MAX_PAGES = 10;
+const MAX_PAGES = 40;
 
 function clean(html: string) {
   return html
@@ -66,8 +66,8 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
     const get = async (page: number) => {
       const url = new URL(base);
       if (page > 1) url.searchParams.set("page", String(page));
-      const res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html" } });
-      if (!res.ok) throw new Error(String(res.status));
+      const res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html" }, signal: AbortSignal.timeout(25000) });
+      if (!res.ok || new URL(res.url).pathname !== base.pathname) throw new Error(String(res.status));
       return res.text();
     };
 
@@ -84,10 +84,18 @@ export const fetchScreenerScreen = createServerFn({ method: "POST" })
     }
     const rows = [...p1.rows];
     const last = Math.min(p1.lastPage, MAX_PAGES);
-    const rest = await Promise.all(
-      Array.from({ length: last - 1 }, (_, i) => get(i + 2).then(parsePage).catch(() => null)),
-    );
-    for (const p of rest) if (p) rows.push(...p.rows);
+    if (p1.lastPage > MAX_PAGES) return { ok: false, reason: "This screen is too large to read in one request. Paste its symbols in Bulk list instead." };
+    try {
+      for (let start = 2; start <= last; start += 8) {
+        const pages = await Promise.all(Array.from({ length: Math.min(8, last - start + 1) }, (_, i) => get(start + i).then(parsePage)));
+        for (const page of pages) {
+          if (!page.headers.length) throw new Error("Missing results table");
+          rows.push(...page.rows);
+        }
+      }
+    } catch {
+      return { ok: false, reason: "Some pages could not be read, so no incomplete results were shown. If this screen needs sign-in, paste its symbols in Bulk list." };
+    }
 
     return {
       ok: true,

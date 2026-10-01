@@ -80,16 +80,16 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
     if (!slug) {
       return { ok: false, reason: "That is not a Chartink screener link." };
     }
-    const pageUrl = `https://chartink.com/screener/${slug}`;
+    const pageUrl = `https://chartink.com/screener/${encodeURIComponent(slug)}`;
 
     let page: Response;
     try {
-      page = await fetch(pageUrl, { headers: { "user-agent": UA, accept: "text/html" } });
+      page = await fetch(pageUrl, { headers: { "user-agent": UA, accept: "text/html" }, signal: AbortSignal.timeout(25000) });
     } catch {
       return { ok: false, reason: "Could not reach the scanner right now." };
     }
-    if (!page.ok) {
-      return { ok: false, reason: "That scanner page could not be opened. Is it public?" };
+    if (!page.ok || new URL(page.url).pathname !== `/screener/${slug}`) {
+      return { ok: false, reason: "That scanner could not be opened from this site. If it needs your Chartink sign-in, paste its symbols in Bulk list." };
     }
 
     const cookies = collectCookies(page);
@@ -129,6 +129,7 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
           ...(cookies ? { cookie: cookies } : {}),
         },
         body: JSON.stringify({ scan_clause: decodeClause(clauseRaw) }),
+        signal: AbortSignal.timeout(25000),
       });
     } catch {
       return { ok: false, reason: "Could not reach the scanner right now." };
