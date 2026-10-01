@@ -4,7 +4,6 @@ import { MarketBackground } from "@/components/site/MarketBackground";
 import { BulkChecker } from "@/components/screener/BulkChecker";
 import { AboutSection, ConnectSection } from "@/components/site/CompanySections";
 import { MethodologySection } from "@/components/site/MethodologySection";
-import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,9 +26,6 @@ function Home() {
         <MarketBackground />
           <div className="relative mx-auto max-w-5xl px-5 pb-8 pt-6 sm:px-6 sm:pb-16 sm:pt-14">
           <div className="flex items-center gap-4">
-             <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-panel p-1 sm:size-20">
-              <img src={zamzamLogo.url} alt="Zamzam Capital logo" className="size-full object-contain" />
-            </span>
              <p className="text-lg font-semibold leading-snug sm:text-xl">Stock Analysis Screeners by <span className="text-primary">Zamzam Capital</span></p>
           </div>
             <h1 className="mt-6 max-w-3xl text-4xl font-bold leading-tight sm:mt-8 sm:text-5xl">Screen your stocks. See their Shariah status.</h1>

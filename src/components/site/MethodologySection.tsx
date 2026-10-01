@@ -50,17 +50,6 @@ export function MethodologySection() {
               </p>
             </div>
           </div>
-          <div className="grid gap-3 py-8 md:grid-cols-[10rem_1fr]">
-            <p className="label-mono pt-1">Current screening data</p>
-            <div>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                This screener displays classifications from the stock list maintained in Zamzam AI Capital. It does not recalculate the framework from Chartink or Screener.in figures, or infer a status when no record exists.
-              </p>
-              <a href="https://zamzam-capital.com/" target="_blank" rel="noreferrer noopener" className="mt-6 inline-block text-sm font-medium text-primary hover:underline">
-                Read the framework on Zamzam Capital&apos;s website ↗
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </section>
