@@ -14,3 +14,4 @@
 - [x] Repair public Screener.in shared-link normalization and pagination; verify complete ordered results in the live screener.
 - [x] Refresh Methodology through Connect with vivid theme-aware colours and desktop mouse-responsive navigation.
 - [x] Align the lower sections' dark and light palettes with Zamzam Capital's teal, charcoal, and white logo.
+- [x] Restore visible candlestick and trader video options in both colour themes while keeping one random selection per visit.
