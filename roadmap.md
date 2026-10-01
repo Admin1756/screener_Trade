@@ -13,3 +13,4 @@
 - [x] Keep Chartink and Screener.in inputs separate and support Chartink scan-run-token links using the working AI Capital flow.
 - [x] Repair public Screener.in shared-link normalization and pagination; verify complete ordered results in the live screener.
 - [x] Refresh Methodology through Connect with vivid theme-aware colours and desktop mouse-responsive navigation.
+- [x] Align the lower sections' dark and light palettes with Zamzam Capital's teal, charcoal, and white logo.
