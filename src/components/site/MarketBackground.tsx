@@ -1,16 +1,23 @@
 import { useEffect, useRef } from "react";
 import candleVideo from "@/assets/candlestick-loop.mp4.asset.json";
 import candleWebm from "@/assets/candlestick-loop.webm.asset.json";
+import traderVideo from "@/assets/trader-background.webm.asset.json";
 
 /** Decorative, illustrative price chart; never presented as live market data. */
 export function MarketBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const secondVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const syncPlayback = () => {
-      if (preference.matches) videoRef.current?.pause();
-      else videoRef.current?.play().catch(() => {});
+      if (preference.matches) {
+        videoRef.current?.pause();
+        secondVideoRef.current?.pause();
+      } else {
+        videoRef.current?.play().catch(() => {});
+        secondVideoRef.current?.play().catch(() => {});
+      }
     };
     syncPlayback();
     preference.addEventListener("change", syncPlayback);
@@ -21,7 +28,7 @@ export function MarketBackground() {
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
       <video
         ref={videoRef}
-        className="market-video absolute inset-x-0 top-0 w-full object-cover object-center"
+        className="market-video market-video-candles absolute inset-x-0 top-0 w-full object-cover object-center"
         autoPlay
         loop
         muted
@@ -31,6 +38,18 @@ export function MarketBackground() {
       >
         <source src={candleWebm.url} type="video/webm" />
         <source src={candleVideo.url} type="video/mp4" />
+      </video>
+      <video
+        ref={secondVideoRef}
+        className="market-video market-video-trader absolute inset-x-0 top-0 w-full object-cover object-center"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        tabIndex={-1}
+      >
+        <source src={traderVideo.url} type="video/webm" />
       </video>
       <div className="market-video-wash absolute inset-x-0 top-0" />
       <div className="absolute inset-0 grid-backdrop opacity-40" />
