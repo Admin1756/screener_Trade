@@ -168,6 +168,29 @@
 .company-editorial { font-family: "Manrope", var(--font-sans); }
 .company-editorial h2, .company-editorial h3 { font-family: "Sora", var(--font-sans); }
 
+.cursor-accent { display: none; }
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cursor-accent {
+    display: block;
+    position: fixed;
+    z-index: 100;
+    top: -19px;
+    left: -19px;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 18px color-mix(in oklab, var(--primary) 28%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease, scale 220ms ease, background-color 220ms ease;
+  }
+
+  .cursor-accent-visible { opacity: 0.75; }
+  .cursor-accent-link { scale: 1.45; background-color: color-mix(in oklab, var(--primary) 12%, transparent); }
+}
+
 .market-video,
 .market-video-wash {
   height: clamp(540px, 62vw, 780px);
