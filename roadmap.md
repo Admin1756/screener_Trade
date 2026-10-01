@@ -2,3 +2,5 @@
 - [x] Update stock analysis screener wording and layer the supplied video with the looping candles.
 - [x] Clarify private Chartink/Screener.in link limitations without implying inaccessible results can be fetched.
 - [x] Verify desktop/mobile layout, videos, and the screener flow.
+- [x] Show only one randomly selected hero video per visit, restore the earlier headline, and place Methodology in the homepage sequence.
+- [x] Make homepage navigation scroll to its sections while preserving direct section URLs.

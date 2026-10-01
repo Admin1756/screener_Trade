@@ -23,7 +23,7 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <SiteShell>
-      <section className="relative overflow-hidden border-b border-border">
+      <section id="screener" className="scroll-mt-16 relative overflow-hidden border-b border-border">
         <MarketBackground />
           <div className="relative mx-auto max-w-5xl px-5 pb-8 pt-6 sm:px-6 sm:pb-16 sm:pt-14">
           <div className="flex items-center gap-4">
