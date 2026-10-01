@@ -5,4 +5,4 @@
 - [x] Show only one randomly selected hero video per visit, restore the earlier headline, and place Methodology in the homepage sequence.
 - [x] Make homepage navigation scroll to its sections while preserving direct section URLs.
 - [x] Remove the large screener image and the Current screening data block.
-- [ ] Refresh About and Connect visuals after choosing a direction.
+- [x] Refresh About and Connect in graphite-and-teal editorial bands with Sora and Manrope.
