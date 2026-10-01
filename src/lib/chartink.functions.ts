@@ -66,6 +66,18 @@ function decodeClause(value: string): string {
     .trim();
 }
 
+function readScanJson(html: string): { atlas_query?: string; scan_run_token?: string } | null {
+  const raw = html.match(/:scan-json="([\s\S]*?)"\s*(?:\n|>)/)?.[1];
+  if (!raw) return null;
+  try {
+    const parsed: unknown = JSON.parse(raw.replace(/&quot;/g, '"').replace(/&#039;|&apos;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&"));
+    if (parsed && typeof parsed === "object") return parsed as { atlas_query?: string; scan_run_token?: string };
+  } catch {
+    // Older Chartink pages may expose only the legacy clause below.
+  }
+  return null;
+}
+
 /**
  * Reads a public Chartink screener and returns its rows in the exact order the
  * scanner produced them (top mover first). Public scan pages only.
@@ -100,13 +112,15 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
       /csrfToken['"]?\s*[:=]\s*['"]([^'"]+)['"]/i,
     ]);
     const xsrf = decodeURIComponent(cookies.match(/XSRF-TOKEN=([^;]+)/)?.[1] ?? "");
-    const clauseRaw = firstMatch(html, [
+    const scanJson = readScanJson(html);
+    const scanRunToken = typeof scanJson?.scan_run_token === "string" ? scanJson.scan_run_token : null;
+    const clauseRaw = scanJson?.atlas_query || firstMatch(html, [
       /&quot;atlas_query&quot;:&quot;([\s\S]*?)&quot;,/,
       /"atlas_query"\s*:\s*"((?:[^"\\]|\\.)*)"/,
       /"scan_clause"\s*:\s*"((?:[^"\\]|\\.)*)"/,
     ]);
 
-    if (!csrf || !clauseRaw) {
+    if (!csrf || (!clauseRaw && !scanRunToken)) {
       return {
         ok: false,
         reason: "This scanner's conditions could not be read. If it requires sign-in, paste its symbols in Bulk list instead.",
@@ -115,11 +129,14 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
 
     let res: Response;
     try {
+      const body = new URLSearchParams();
+      if (scanRunToken) body.set("scan_run_token", scanRunToken);
+      if (clauseRaw) body.set("scan_clause", scanJson?.atlas_query ? clauseRaw : decodeClause(clauseRaw));
       res = await fetch("https://chartink.com/screener/process", {
         method: "POST",
         headers: {
           "user-agent": UA,
-          "content-type": "application/json",
+          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
           "x-csrf-token": csrf,
           ...(xsrf ? { "x-xsrf-token": xsrf } : {}),
           "x-requested-with": "XMLHttpRequest",
@@ -128,7 +145,7 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
           origin: "https://chartink.com",
           ...(cookies ? { cookie: cookies } : {}),
         },
-        body: JSON.stringify({ scan_clause: decodeClause(clauseRaw) }),
+        body,
         signal: AbortSignal.timeout(25000),
       });
     } catch {

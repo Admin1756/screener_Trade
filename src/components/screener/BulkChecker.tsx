@@ -54,7 +54,8 @@ export function BulkChecker() {
   const runScreener = useServerFn(fetchScreenerScreen);
   const loadStocks = useServerFn(getSharedStocks);
   const [mode, setMode] = useState<Mode>("chartink");
-  const [link, setLink] = useState("");
+  const [chartinkLink, setChartinkLink] = useState("");
+  const [screenerLink, setScreenerLink] = useState("");
   const [list, setList] = useState("");
   const [busy, setBusy] = useState(false);
   const [stage, setStage] = useState("");
@@ -70,9 +71,9 @@ export function BulkChecker() {
     setBusy(true);
     try {
       if (mode === "chartink") {
-        if (!link.trim()) return;
+        if (!chartinkLink.trim()) return setError("Paste a Chartink scanner link.");
         setStage("Reading Chartink scanner…");
-        const r = await runChartink({ data: { link: link.trim() } });
+        const r = await runChartink({ data: { link: chartinkLink.trim() } });
         if (!r.ok) return setError(r.reason);
         if (!r.rows.length) return setError("That scanner returned no stocks right now.");
         setStage("Checking Shariah status…");
@@ -91,9 +92,9 @@ export function BulkChecker() {
         return;
       }
       if (mode === "screener") {
-        if (!link.trim()) return;
+        if (!screenerLink.trim()) return setError("Paste a Screener.in screen link.");
         setStage("Reading Screener.in screen…");
-        const r = await runScreener({ data: { link: link.trim() } });
+        const r = await runScreener({ data: { link: screenerLink.trim() } });
         if (!r.ok) return setError(r.reason);
         if (!r.rows.length) return setError("That screen returned no stocks right now.");
         setStage("Checking Shariah status…");
@@ -155,8 +156,8 @@ export function BulkChecker() {
               </label>
               <input
                 id="zz-scan"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
+                 value={mode === "chartink" ? chartinkLink : screenerLink}
+                 onChange={(e) => mode === "chartink" ? setChartinkLink(e.target.value) : setScreenerLink(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && void run()}
                 placeholder={placeholder}
                 className="mt-2 w-full bg-transparent text-base tracking-tight placeholder:text-muted-foreground/60 focus:outline-none"

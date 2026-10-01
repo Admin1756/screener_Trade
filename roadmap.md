@@ -10,3 +10,4 @@
 - [x] Match the supplied About and Connect card layout while retaining only verified official profiles.
 - [x] Tighten About and Connect badge/card spacing for mobile without changing their order.
 - [x] Test public Chartink and Screener.in links and prevent silent partial screen results; private links still require authorized access.
+- [x] Keep Chartink and Screener.in inputs separate and support Chartink scan-run-token links using the working AI Capital flow.
