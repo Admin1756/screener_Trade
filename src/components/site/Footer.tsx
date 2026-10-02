@@ -9,7 +9,7 @@ export function Footer() {
           className="flex items-center gap-3"
           aria-label="Zamzam Capital — official website"
         >
-          <span className="grid h-11 place-items-center overflow-hidden rounded-sm border border-border bg-panel px-2">
+          <span className="flex h-11 items-center overflow-hidden rounded-sm border border-border bg-panel px-2">
             <img src={zamzamLogo.url} alt="" className="h-full w-auto object-contain" />
           </span>
           <span className="text-sm font-semibold">Zamzam Capital</span>
