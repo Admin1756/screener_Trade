@@ -20,7 +20,7 @@ export function BrandLockup({
     <div className={cn("flex items-center gap-3", className)}>
       <span
         className={cn(
-          "grid shrink-0 place-items-center overflow-hidden rounded-lg bg-panel ring-1 ring-border",
+          "grid shrink-0 place-items-center overflow-hidden rounded-lg bg-panel px-1.5 ring-1 ring-border",
           box,
         )}
       >
