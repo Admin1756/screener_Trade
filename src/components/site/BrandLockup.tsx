@@ -1,4 +1,5 @@
 import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
+import zamzamDarkLogo from "@/assets/zamzam-logo-dark.png.asset.json";
 import chartinkLogo from "@/assets/chartink-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 
@@ -21,14 +22,20 @@ export function BrandLockup({
     <div className={cn("flex items-center gap-3", className)}>
       <span
         className={cn(
-          "flex shrink-0 items-center overflow-hidden rounded-lg bg-panel px-2 ring-1 ring-border",
+          "flex shrink-0 items-center overflow-hidden rounded-lg px-2 ring-1 ring-border",
           zamzamBox,
         )}
       >
         <img
-          src={zamzamLogo.url}
+          src={zamzamDarkLogo.url}
           alt="Zamzam Capital logo"
-          className="h-full w-auto object-contain"
+          className="h-full w-auto object-contain light:hidden"
+          loading="lazy"
+        />
+        <img
+          src={zamzamLogo.url}
+          alt=""
+          className="hidden h-full w-auto object-contain light:block"
           loading="lazy"
         />
       </span>

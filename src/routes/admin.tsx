@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
+import zamzamDarkLogo from "@/assets/zamzam-logo-dark.png.asset.json";
 
 const uploadUrl = "https://zamzamcapitalai.lovable.app/admin/stocks";
 
@@ -24,7 +25,10 @@ function AdminRedirect() {
 
   return <main className="grid min-h-screen place-items-center bg-background px-5">
     <div className="text-center">
-      <img src={zamzamLogo.url} alt="Zamzam Capital" className="mx-auto h-16 rounded-sm border border-border bg-panel object-contain p-1" />
+      <span className="mx-auto flex h-16 items-center overflow-hidden rounded-sm border border-border px-3">
+        <img src={zamzamDarkLogo.url} alt="Zamzam Capital" className="h-full w-auto object-contain light:hidden" />
+        <img src={zamzamLogo.url} alt="Zamzam Capital" className="hidden h-full w-auto object-contain light:block" />
+      </span>
       <h1 className="mt-6 text-xl font-semibold">Stock uploads are managed in Zamzam AI Capital</h1>
       <p className="mt-2 text-sm text-muted-foreground">Opening the admin upload page…</p>
       <Button asChild className="mt-6"><a href={uploadUrl}>Open stock uploads <ExternalLink className="size-4" /></a></Button>
