@@ -26,7 +26,7 @@ export function Header() {
           aria-label="Zamzam Capital — official website"
         >
           <span className="grid h-11 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-panel px-2">
-            <img src={zamzamLogo.url} alt="" className="size-full object-contain" />
+            <img src={zamzamLogo.url} alt="" className="h-full w-auto object-contain" />
           </span>
           <span className="leading-none">
             <span className="block text-sm font-semibold tracking-tight">Zamzam Capital</span>

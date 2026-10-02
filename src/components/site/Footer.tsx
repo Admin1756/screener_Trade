@@ -10,7 +10,7 @@ export function Footer() {
           aria-label="Zamzam Capital — official website"
         >
           <span className="grid h-11 place-items-center overflow-hidden rounded-sm border border-border bg-panel px-2">
-            <img src={zamzamLogo.url} alt="" className="size-full object-contain" />
+            <img src={zamzamLogo.url} alt="" className="h-full w-auto object-contain" />
           </span>
           <span className="text-sm font-semibold">Zamzam Capital</span>
         </a>
