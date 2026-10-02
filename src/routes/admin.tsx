@@ -24,7 +24,7 @@ function AdminRedirect() {
 
   return <main className="grid min-h-screen place-items-center bg-background px-5">
     <div className="text-center">
-      <img src={zamzamLogo.url} alt="Zamzam Capital" className="mx-auto size-16 rounded-sm border border-border object-contain" />
+      <img src={zamzamLogo.url} alt="Zamzam Capital" className="mx-auto h-16 rounded-sm border border-border bg-panel object-contain p-1" />
       <h1 className="mt-6 text-xl font-semibold">Stock uploads are managed in Zamzam AI Capital</h1>
       <p className="mt-2 text-sm text-muted-foreground">Opening the admin upload page…</p>
       <Button asChild className="mt-6"><a href={uploadUrl}>Open stock uploads <ExternalLink className="size-4" /></a></Button>
