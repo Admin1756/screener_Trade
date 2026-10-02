@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
+import zamzamDarkLogo from "@/assets/zamzam-logo-dark.png.asset.json";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 
@@ -25,8 +26,9 @@ export function Header() {
           className="flex items-center gap-3"
           aria-label="Zamzam Capital — official website"
         >
-          <span className="flex h-11 shrink-0 items-center overflow-hidden rounded-sm border border-border bg-panel px-2">
-            <img src={zamzamLogo.url} alt="" className="h-full w-auto object-contain" />
+          <span className="flex h-11 shrink-0 items-center overflow-hidden rounded-sm border border-border px-2">
+            <img src={zamzamDarkLogo.url} alt="" className="h-full w-auto object-contain light:hidden" />
+            <img src={zamzamLogo.url} alt="" className="hidden h-full w-auto object-contain light:block" />
           </span>
           <span className="leading-none">
             <span className="block text-sm font-semibold tracking-tight">Zamzam Capital</span>

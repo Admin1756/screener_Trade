@@ -1,4 +1,5 @@
 import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
+import zamzamDarkLogo from "@/assets/zamzam-logo-dark.png.asset.json";
 
 export function Footer() {
   return (
@@ -9,8 +10,9 @@ export function Footer() {
           className="flex items-center gap-3"
           aria-label="Zamzam Capital — official website"
         >
-          <span className="flex h-11 items-center overflow-hidden rounded-sm border border-border bg-panel px-2">
-            <img src={zamzamLogo.url} alt="" className="h-full w-auto object-contain" />
+          <span className="flex h-11 items-center overflow-hidden rounded-sm border border-border px-2">
+            <img src={zamzamDarkLogo.url} alt="" className="h-full w-auto object-contain light:hidden" />
+            <img src={zamzamLogo.url} alt="" className="hidden h-full w-auto object-contain light:block" />
           </span>
           <span className="text-sm font-semibold">Zamzam Capital</span>
         </a>
