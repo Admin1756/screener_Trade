@@ -250,8 +250,8 @@ export function BulkChecker() {
               <table className="w-max min-w-full table-fixed border-collapse text-sm">
                 <thead>
                   <tr className="border-b border-border bg-panel text-left">
-                    <th scope="col" className="sticky left-0 z-20 w-12 min-w-12 bg-panel px-3 py-3 font-mono text-[11px] text-muted-foreground">#</th>
-                    <th scope="col" className="sticky left-12 z-20 w-64 min-w-64 border-r border-border bg-panel px-3 py-3 text-[11px] font-semibold uppercase text-muted-foreground sm:w-72 sm:min-w-72">Stock · Shariah status</th>
+                    <th scope="col" className="sticky left-0 z-20 w-10 min-w-10 bg-panel px-2 py-3 font-mono text-[11px] text-muted-foreground">#</th>
+                    <th scope="col" className="sticky left-10 z-20 w-48 min-w-48 border-r border-border bg-panel px-2 py-3 text-[11px] font-semibold uppercase text-muted-foreground sm:w-72 sm:min-w-72 sm:px-3">Stock · Shariah status</th>
                     {columns.map((c, i) => (
                       <th scope="col" key={`${c}-${i}`} className="min-w-32 px-4 py-3 text-right text-[11px] font-semibold uppercase leading-snug text-muted-foreground">
                         {c}
@@ -265,12 +265,12 @@ export function BulkChecker() {
                       key={`${e.rank}-${e.input}`}
                       className="group border-b border-border last:border-0"
                     >
-                      <td className="sticky left-0 z-10 bg-surface px-3 py-3 align-middle font-mono text-xs text-muted-foreground group-hover:bg-panel">
+                      <td className="sticky left-0 z-10 bg-surface px-2 py-3 align-middle font-mono text-xs text-muted-foreground group-hover:bg-panel">
                         {String(e.rank).padStart(2, "0")}
                       </td>
-                      <td className="sticky left-12 z-10 w-64 min-w-64 border-r border-border bg-surface px-3 py-3 align-middle group-hover:bg-panel sm:w-72 sm:min-w-72">
+                      <td className="sticky left-10 z-10 w-48 min-w-48 border-r border-border bg-surface px-2 py-3 align-middle group-hover:bg-panel sm:w-72 sm:min-w-72 sm:px-3">
                         <p className="truncate font-semibold text-foreground" title={e.scannerName ?? e.stock?.company_name ?? e.input}>{e.scannerName ?? e.stock?.company_name ?? e.input}</p>
-                        <div className="mt-1.5 flex items-center justify-between gap-2">
+                        <div className="mt-1.5 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
                           <span className="min-w-0 truncate font-mono text-[11px] text-muted-foreground" title={e.input}>{e.input}</span>
                           <StatusPill status={e.status} />
                         </div>
