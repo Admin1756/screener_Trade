@@ -79,8 +79,8 @@ function readScanJson(html: string): { atlas_query?: string; scan_run_token?: st
 }
 
 /**
- * Reads a public Chartink screener and returns its rows in the exact order the
- * scanner produced them (top mover first). Public scan pages only.
+ * Reads a Chartink scan and displays its gainers by percentage change, highest
+ * first. The process endpoint itself does not reliably return gainers in order.
  */
 export const fetchChartinkScan = createServerFn({ method: "POST" })
   .inputValidator((data: { link: string }) => {
@@ -174,5 +174,10 @@ export const fetchChartinkScan = createServerFn({ method: "POST" })
       volume: str(row['volume']),
     }));
 
-    return { ok: true, slug, rows: rows.filter((r) => r.symbol) };
+    const gain = (row: ScanRow) => {
+      const value = Number(row.percent_change?.replace(/[% ,]/g, ""));
+      return row.percent_change && Number.isFinite(value) ? value : -Infinity;
+    };
+    const ranked = rows.filter((r) => r.symbol).sort((a, b) => gain(b) - gain(a));
+    return { ok: true, slug, rows: ranked.map((row, index) => ({ ...row, rank: index + 1 })) };
   });
