@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { BarChart3, LineChart, ListChecks, Loader2 } from "lucide-react";
+import { BarChart3, ChevronLeft, ChevronRight, LineChart, ListChecks, Loader2 } from "lucide-react";
 import { fetchChartinkScan } from "@/lib/chartink.functions";
 import { fetchScreenerScreen } from "@/lib/screener.functions";
 import { getSharedStocks } from "@/lib/ai-capital.functions";
@@ -24,11 +24,13 @@ const STATUS_STYLE: Record<ComplianceStatus, string> = {
   NOT_AVAILABLE: "bg-muted text-muted-foreground ring-border",
 };
 
+const PAGE_SIZE = 25;
+
 function StatusPill({ status }: { status: ComplianceStatus }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wide ring-1",
+        "inline-flex items-center gap-1.5 whitespace-nowrap rounded px-2 py-1 text-[10px] font-bold uppercase ring-1",
         STATUS_STYLE[status],
       )}
     >
@@ -63,11 +65,13 @@ export function BulkChecker() {
   const [entries, setEntries] = useState<BulkEntry[] | null>(null);
   const [columns, setColumns] = useState<string[]>([]);
   const [note, setNote] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
 
   async function run() {
     setError(null);
     setEntries(null);
     setNote(null);
+    setPage(0);
     setBusy(true);
     try {
       if (mode === "chartink") {
@@ -118,6 +122,8 @@ export function BulkChecker() {
   }
 
   const stats = entries ? summarise(entries) : null;
+  const pageCount = entries ? Math.ceil(entries.length / PAGE_SIZE) : 0;
+  const visibleEntries = entries?.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE) ?? [];
   const placeholder =
     mode === "chartink" ? "https://chartink.com/screener/..." : "https://www.screener.in/screens/...";
 
@@ -230,40 +236,47 @@ export function BulkChecker() {
               </div>
             ) : null}
 
-            {note ? <p className="label-mono">{note}</p> : null}
+            <div className="flex flex-col gap-1 border-b border-border pb-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+              <div className="min-w-0">
+                <h2 className="text-lg font-semibold">Screen results</h2>
+                {note ? <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{note}</p> : null}
+              </div>
+              <p className="shrink-0 font-mono text-xs text-muted-foreground">
+                {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, entries.length)} of {entries.length}
+              </p>
+            </div>
 
-            <div className="overflow-x-auto rounded-2xl border border-border glass">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto rounded-md border border-border bg-surface/90" role="region" aria-label="Screen results table" tabIndex={0}>
+              <table className="w-max min-w-full table-fixed border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-border text-left">
-                    <th className="label-mono sticky left-0 bg-surface px-4 py-2.5">#</th>
-                    <th className="label-mono sticky left-10 bg-surface px-4 py-2.5">Stock</th>
-                    <th className="label-mono px-4 py-2.5">Shariah</th>
-                    {columns.map((c) => (
-                      <th key={c} className="label-mono whitespace-nowrap px-4 py-2.5 text-right">
+                  <tr className="border-b border-border bg-panel text-left">
+                    <th scope="col" className="sticky left-0 z-20 w-10 min-w-10 bg-panel px-2 py-3 font-mono text-[11px] text-muted-foreground">#</th>
+                    <th scope="col" className="sticky left-10 z-20 w-48 min-w-48 border-r border-border bg-panel px-2 py-3 text-[11px] font-semibold uppercase text-muted-foreground sm:w-72 sm:min-w-72 sm:px-3">Stock · Shariah status</th>
+                    {columns.map((c, i) => (
+                      <th scope="col" key={`${c}-${i}`} className="min-w-32 px-4 py-3 text-right text-[11px] font-semibold uppercase leading-snug text-muted-foreground">
                         {c}
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {entries.map((e) => (
+                  {visibleEntries.map((e) => (
                     <tr
                       key={`${e.rank}-${e.input}`}
-                      className="border-b border-border transition-colors last:border-0 hover:bg-panel/60"
+                      className="group border-b border-border last:border-0"
                     >
-                      <td className="sticky left-0 bg-surface/95 px-4 py-3 font-mono text-xs text-muted-foreground">
-                        {e.rank}
+                      <td className="sticky left-0 z-10 bg-surface px-2 py-3 align-middle font-mono text-xs text-muted-foreground group-hover:bg-panel">
+                        {String(e.rank).padStart(2, "0")}
                       </td>
-                      <td className="sticky left-10 max-w-[16rem] bg-surface/95 px-4 py-3">
-                        <p className="truncate font-medium">{e.scannerName ?? e.stock?.company_name ?? e.input}</p>
-                        <p className="font-mono text-[11px] text-muted-foreground">{e.input}</p>
-                      </td>
-                      <td className="px-4 py-3">
-                        <StatusPill status={e.status} />
+                      <td className="sticky left-10 z-10 w-48 min-w-48 border-r border-border bg-surface px-2 py-3 align-middle group-hover:bg-panel sm:w-72 sm:min-w-72 sm:px-3">
+                        <p className="truncate font-semibold text-foreground" title={e.scannerName ?? e.stock?.company_name ?? e.input}>{e.scannerName ?? e.stock?.company_name ?? e.input}</p>
+                        <div className="mt-1.5 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+                          <span className="min-w-0 truncate font-mono text-[11px] text-muted-foreground" title={e.input}>{e.input}</span>
+                          <StatusPill status={e.status} />
+                        </div>
                       </td>
                       {columns.map((c, i) => (
-                        <td key={c} className="whitespace-nowrap px-4 py-3 text-right font-mono text-muted-foreground">
+                        <td key={`${c}-${i}`} className="min-w-32 px-4 py-3 text-right align-middle font-mono text-xs tabular-nums text-foreground/80 group-hover:bg-panel">
                           {e.cells?.[i] || "—"}
                         </td>
                       ))}
@@ -272,6 +285,16 @@ export function BulkChecker() {
                 </tbody>
               </table>
             </div>
+
+            {pageCount > 1 ? (
+              <nav className="flex items-center justify-between gap-3" aria-label="Results pages">
+                <p className="font-mono text-xs text-muted-foreground">Page {page + 1} of {pageCount}</p>
+                <div className="flex items-center gap-2">
+                  <Button type="button" variant="outline" size="icon" aria-label="Previous results page" title="Previous page" disabled={page === 0} onClick={() => setPage((current) => Math.max(0, current - 1))}><ChevronLeft /></Button>
+                  <Button type="button" variant="outline" size="icon" aria-label="Next results page" title="Next page" disabled={page >= pageCount - 1} onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))}><ChevronRight /></Button>
+                </div>
+              </nav>
+            ) : null}
 
             <p className="text-xs text-muted-foreground">
               Market figures are shown exactly as the source listed them. Compliance status always comes from the
