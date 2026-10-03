@@ -20,3 +20,4 @@
 - Keep Chartink and Screener.in links in separate input state so switching tabs never submits a link to the wrong service; support Chartink's scan-run-token and clause forms while preserving returned row order.
 - Normalize public Screener.in screen URLs, read every listed page in source order, and reject partial results when access is blocked or rate-limited; otherwise a shared link can silently omit stocks.
 - Mount the decorative cursor accent in the shared site shell so it behaves consistently on public pages, and disable it for touch and reduced-motion users to preserve native interaction.
+- Keep bulk results in source order, show status beside each stock in a pinned identity column, and paginate only the presentation so large screens remain readable without dropping data.
