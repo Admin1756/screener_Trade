@@ -92,7 +92,7 @@ export function BulkChecker() {
             await loadStocks({ data: { symbols: r.rows.map((row) => row.symbol) } }),
           ),
         );
-        setNote(`Chartink · ${r.slug} — order kept exactly as the scanner returned it (top mover first).`);
+        setNote(`Chartink · ${r.slug} — sorted by % gain, highest first.`);
         return;
       }
       if (mode === "screener") {

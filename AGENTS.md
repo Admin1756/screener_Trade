@@ -17,7 +17,7 @@
 - Reuse shared About and Connect sections on the homepage and their standalone pages so public company details and official profiles stay consistent.
 - Keep Screener, Methodology, About, and Connect in one linear homepage flow, with homepage navigation scrolling to those sections; retain standalone section URLs for existing bookmarks.
 - Style shared About and Connect sections as reference-matched intro/badge/two-column feature cards followed by a centered community heading and two-column profile cards; keep official facts and links unchanged so the design stays credible.
-- Keep Chartink and Screener.in links in separate input state so switching tabs never submits a link to the wrong service; support Chartink's scan-run-token and clause forms while preserving returned row order.
+- Keep Chartink and Screener.in links in separate input state so switching tabs never submits a link to the wrong service; support Chartink's scan-run-token and clause forms, and rank Chartink results by percentage gain because its process feed does not reliably match its top-gainers display.
 - Normalize public Screener.in screen URLs, read every listed page in source order, and reject partial results when access is blocked or rate-limited; otherwise a shared link can silently omit stocks.
 - Mount the decorative cursor accent in the shared site shell so it behaves consistently on public pages, and disable it for touch and reduced-motion users to preserve native interaction.
-- Keep bulk results in source order, show status beside each stock in a pinned identity column, and paginate only the presentation so large screens remain readable without dropping data.
+- Keep Screener.in and pasted-list results in source order, Chartink results in descending percentage-gain order; show status beside each stock in a pinned identity column, and paginate only the presentation so large screens remain readable without dropping data.
