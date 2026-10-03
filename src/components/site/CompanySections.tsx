@@ -67,5 +67,7 @@ export function ConnectSection() {
             </a>
           ))}
         </div>
+      </div>
+    </section>
   );
 }
