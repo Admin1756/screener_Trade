@@ -67,8 +67,5 @@ export function ConnectSection() {
             </a>
           ))}
         </div>
-        <p className="mt-6 text-center text-xs text-company-muted">Profiles listed on zamzam-capital.com.</p>
-      </div>
-    </section>
   );
 }
