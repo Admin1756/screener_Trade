@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { BarChart3, ChevronLeft, ChevronRight, LineChart, ListChecks, Loader2 } from "lucide-react";
+import { BarChart3, ChevronLeft, ChevronRight, Download, FileSpreadsheet, LineChart, ListChecks, Loader2 } from "lucide-react";
+import { downloadResults } from "@/lib/download";
 import { fetchChartinkScan } from "@/lib/chartink.functions";
 import { fetchScreenerScreen } from "@/lib/screener.functions";
 import { getSharedStocks } from "@/lib/ai-capital.functions";
@@ -243,9 +244,35 @@ export function BulkChecker() {
                 <h2 className="text-lg font-semibold">Screen results</h2>
                 {note ? <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{note}</p> : null}
               </div>
-              <p className="shrink-0 font-mono text-xs text-muted-foreground">
-                {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, entries.length)} of {entries.length}
-              </p>
+              <div className="flex shrink-0 items-center gap-2">
+                <p className="font-mono text-xs text-muted-foreground">
+                  {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, entries.length)} of {entries.length}
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-10 gap-1.5 px-3 text-xs sm:min-h-9"
+                  title="Download results as an Excel spreadsheet"
+                  onClick={() =>
+                    downloadResults("xlsx", entries, columns, mode === "chartink" ? "chartink" : mode === "screener" ? "screener-in" : "bulk-list")
+                  }
+                >
+                  <FileSpreadsheet className="size-4" />
+                  Excel
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-10 gap-1.5 px-3 text-xs sm:min-h-9"
+                  title="Download results as a CSV file"
+                  onClick={() =>
+                    downloadResults("csv", entries, columns, mode === "chartink" ? "chartink" : mode === "screener" ? "screener-in" : "bulk-list")
+                  }
+                >
+                  <Download className="size-4" />
+                  CSV
+                </Button>
+              </div>
             </div>
 
             <div className="overflow-x-auto rounded-md border border-border bg-surface/90" role="region" aria-label="Screen results table" tabIndex={0}>
