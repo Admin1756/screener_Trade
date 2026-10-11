@@ -15,3 +15,5 @@
 - [x] Keep the homepage title on one line at desktop widths and add a subtle, reduced-motion-aware desktop cursor accent.
 - [x] Replace the cursor ring with a soft fading light on desktop, retaining the native pointer and reduced-motion behavior.
 - [x] Show Chartink scan stocks by percentage gain, highest first, without changing Screener.in or bulk-list ordering.
+
+- [ ] Optimize the mobile header, screener controls, results and linear content sections; verify live screens.
