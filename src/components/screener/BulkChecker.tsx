@@ -129,19 +129,21 @@ export function BulkChecker() {
 
   return (
     <div className="w-full">
-      <div className="rounded-2xl border border-border glass p-2">
-        <div className="grid grid-cols-3 gap-1 p-1.5">
+      <div className="rounded-lg border border-border glass p-1.5 sm:rounded-2xl sm:p-2">
+        <div className="grid grid-cols-3 gap-1 p-1 sm:p-1.5">
           {MODES.map((m) => (
             <Button
               key={m.id}
               type="button"
+              aria-pressed={mode === m.id}
+              disabled={busy}
               variant="ghost"
               onClick={() => {
                 setMode(m.id);
                 setError(null);
               }}
               className={cn(
-                "flex flex-col items-center gap-0.5 rounded-lg px-2 py-2.5 transition-colors sm:flex-row sm:justify-center sm:gap-2",
+                "flex h-auto min-h-14 flex-col items-center gap-1 rounded-md px-1 py-2.5 sm:min-h-9 sm:px-2 transition-colors sm:flex-row sm:justify-center sm:gap-2",
                 mode === m.id ? "bg-panel text-foreground ring-1 ring-border" : "text-muted-foreground hover:text-foreground",
               )}
             >
@@ -154,7 +156,7 @@ export function BulkChecker() {
           ))}
         </div>
 
-        <div className="rounded-xl border border-border bg-background/50 p-4">
+        <div className="rounded-md border border-border bg-background/50 p-3 sm:rounded-xl sm:p-4">
           {mode !== "list" ? (
             <>
               <label htmlFor="zz-scan" className="label-mono">
@@ -189,12 +191,12 @@ export function BulkChecker() {
             type="button"
             disabled={busy}
             onClick={() => void run()}
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
+            className="mt-4 flex h-auto min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
           >
             {busy ? <Loader2 className="size-4 animate-spin" /> : null}
             {busy ? stage || "Working…" : mode === "list" ? "Check List" : "Analyze & Check Compliance"}
            </Button>
-           <p className="mt-3 text-center text-xs text-muted-foreground">Links must be accessible without signing in. Private screens cannot be read from a link alone; paste their symbols in Bulk list instead.</p>
+           <p className="mt-3 text-center text-xs leading-relaxed text-muted-foreground">Links must be accessible without signing in. Private screens cannot be read from a link alone; paste their symbols in Bulk list instead.</p>
         </div>
       </div>
 
@@ -220,7 +222,7 @@ export function BulkChecker() {
         {entries && !busy ? (
           <div className="animate-rise space-y-4">
             {stats ? (
-              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-5">
+              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg sm:rounded-2xl border border-border bg-border sm:grid-cols-5">
                 {[
                   ["Stocks", stats.total],
                   ["Compliant", stats.compliant],
@@ -228,7 +230,7 @@ export function BulkChecker() {
                   ["Under review", stats.underReview],
                   ["Not available", stats.notAvailable],
                 ].map(([label, value]) => (
-                  <div key={String(label)} className="bg-surface p-4">
+                  <div key={String(label)} className="bg-surface p-3 first:col-span-2 sm:p-4 sm:first:col-span-1">
                     <p className="label-mono">{label}</p>
                     <p className="mt-1.5 font-mono text-xl font-semibold">{value}</p>
                   </div>
@@ -250,8 +252,8 @@ export function BulkChecker() {
               <table className="w-max min-w-full table-fixed border-collapse text-sm">
                 <thead>
                   <tr className="border-b border-border bg-panel text-left">
-                    <th scope="col" className="sticky left-0 z-20 w-10 min-w-10 bg-panel px-2 py-3 font-mono text-[11px] text-muted-foreground">#</th>
-                    <th scope="col" className="sticky left-10 z-20 w-48 min-w-48 border-r border-border bg-panel px-2 py-3 text-[11px] font-semibold uppercase text-muted-foreground sm:w-72 sm:min-w-72 sm:px-3">Stock · Shariah status</th>
+                    <th scope="col" className="sticky left-0 z-20 w-7 min-w-7 sm:w-10 sm:min-w-10 bg-panel px-2 py-3 font-mono text-[11px] text-muted-foreground">#</th>
+                    <th scope="col" className="sticky left-7 z-20 w-44 min-w-44 sm:left-10 border-r border-border bg-panel px-2 py-3 text-[11px] font-semibold uppercase text-muted-foreground sm:w-72 sm:min-w-72 sm:px-3">Stock · Shariah status</th>
                     {columns.map((c, i) => (
                       <th scope="col" key={`${c}-${i}`} className="min-w-32 px-4 py-3 text-right text-[11px] font-semibold uppercase leading-snug text-muted-foreground">
                         {c}
@@ -265,12 +267,12 @@ export function BulkChecker() {
                       key={`${e.rank}-${e.input}`}
                       className="group border-b border-border last:border-0"
                     >
-                      <td className="sticky left-0 z-10 bg-surface px-2 py-3 align-middle font-mono text-xs text-muted-foreground group-hover:bg-panel">
+                      <td className="sticky left-0 z-10 w-7 bg-surface sm:w-10 px-2 py-3 align-middle font-mono text-xs text-muted-foreground group-hover:bg-panel">
                         {String(e.rank).padStart(2, "0")}
                       </td>
-                      <td className="sticky left-10 z-10 w-48 min-w-48 border-r border-border bg-surface px-2 py-3 align-middle group-hover:bg-panel sm:w-72 sm:min-w-72 sm:px-3">
+                      <td className="sticky left-7 z-10 w-44 min-w-44 sm:left-10 border-r border-border bg-surface px-2 py-3 align-middle group-hover:bg-panel sm:w-72 sm:min-w-72 sm:px-3">
                         <p className="truncate font-semibold text-foreground" title={e.scannerName ?? e.stock?.company_name ?? e.input}>{e.scannerName ?? e.stock?.company_name ?? e.input}</p>
-                        <div className="mt-1.5 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+                        <div className="mt-1.5 flex min-w-0 flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-2">
                           <span className="min-w-0 truncate font-mono text-[11px] text-muted-foreground" title={e.input}>{e.input}</span>
                           <StatusPill status={e.status} />
                         </div>
@@ -290,8 +292,8 @@ export function BulkChecker() {
               <nav className="flex items-center justify-between gap-3" aria-label="Results pages">
                 <p className="font-mono text-xs text-muted-foreground">Page {page + 1} of {pageCount}</p>
                 <div className="flex items-center gap-2">
-                  <Button type="button" variant="outline" size="icon" aria-label="Previous results page" title="Previous page" disabled={page === 0} onClick={() => setPage((current) => Math.max(0, current - 1))}><ChevronLeft /></Button>
-                  <Button type="button" variant="outline" size="icon" aria-label="Next results page" title="Next page" disabled={page >= pageCount - 1} onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))}><ChevronRight /></Button>
+                  <Button type="button" variant="outline" size="icon" className="size-11" aria-label="Previous results page" title="Previous page" disabled={page === 0} onClick={() => setPage((current) => Math.max(0, current - 1))}><ChevronLeft /></Button>
+                  <Button type="button" variant="outline" size="icon" className="size-11" aria-label="Next results page" title="Next page" disabled={page >= pageCount - 1} onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))}><ChevronRight /></Button>
                 </div>
               </nav>
             ) : null}

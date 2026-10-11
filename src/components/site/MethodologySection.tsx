@@ -8,16 +8,16 @@ const ratios = [
 
 export function MethodologySection() {
   return (
-    <section id="methodology" className="scroll-mt-16 border-b border-border bg-background py-16 sm:py-20">
-      <div className="mx-auto max-w-5xl px-5 sm:px-6">
+    <section id="methodology" className="scroll-mt-16 border-b border-border bg-background py-12 sm:py-20">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <p className="label-mono text-primary">Methodology</p>
-        <h2 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl">Our Shariah Screening Framework</h2>
+        <h2 className="mt-3 text-3xl sm:mt-5 font-semibold leading-tight sm:text-5xl">Our Shariah Screening Framework</h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
           Zamzam Capital&apos;s published approach reviews business activities, financial ratios and qualitative factors.
         </p>
 
-        <div className="mt-10 border-t border-border">
-          <div className="grid gap-3 border-b border-border py-8 md:grid-cols-[10rem_1fr]">
+        <div className="mt-7 border-t sm:mt-10 border-border">
+          <div className="grid gap-3 border-b border-border py-6 sm:py-8 md:grid-cols-[10rem_1fr]">
             <p className="label-mono pt-1">Stage 01</p>
             <div>
               <h3 className="text-xl font-semibold">Business sector check</h3>
@@ -26,7 +26,7 @@ export function MethodologySection() {
               </p>
             </div>
           </div>
-          <div className="grid gap-3 border-b border-border py-8 md:grid-cols-[10rem_1fr]">
+          <div className="grid gap-3 border-b border-border py-6 sm:py-8 md:grid-cols-[10rem_1fr]">
             <p className="label-mono pt-1">Stage 02</p>
             <div>
               <h3 className="text-xl font-semibold">Financial ratio check</h3>
@@ -41,7 +41,7 @@ export function MethodologySection() {
               </dl>
             </div>
           </div>
-          <div className="grid gap-3 border-b border-border py-8 md:grid-cols-[10rem_1fr]">
+          <div className="grid gap-3 border-b border-border py-6 sm:py-8 md:grid-cols-[10rem_1fr]">
             <p className="label-mono pt-1">Stage 03</p>
             <div>
               <h3 className="text-xl font-semibold">Qualitative screening check</h3>
