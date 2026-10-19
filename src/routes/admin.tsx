@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
-import zamzamDarkLogo from "@/assets/zamzam-logo-dark.png.asset.json";
+import { zamzamLogo } from "@/lib/media";
+import { zamzamDarkLogo } from "@/lib/media";
 
 const uploadUrl = "https://zamzamcapitalai.lovable.app/admin/stocks";
 

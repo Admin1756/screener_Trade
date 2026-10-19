@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import candleVideo from "@/assets/candlestick-loop.mp4.asset.json";
-import candleWebm from "@/assets/candlestick-loop.webm.asset.json";
-import traderVideo from "@/assets/trader-background.webm.asset.json";
+import { candleVideo } from "@/lib/media";
+import { candleWebm } from "@/lib/media";
+import { traderVideo } from "@/lib/media";
 
 /** Decorative, illustrative price chart; never presented as live market data. */
 export function MarketBackground() {
