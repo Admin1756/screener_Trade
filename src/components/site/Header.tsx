@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
-import zamzamDarkLogo from "@/assets/zamzam-logo-dark.png.asset.json";
+import { zamzamLogo } from "@/lib/media";
+import { zamzamDarkLogo } from "@/lib/media";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 

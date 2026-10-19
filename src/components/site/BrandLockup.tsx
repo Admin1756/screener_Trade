@@ -1,6 +1,6 @@
-import zamzamLogo from "@/assets/zamzam-logo.png.asset.json";
-import zamzamDarkLogo from "@/assets/zamzam-logo-dark.png.asset.json";
-import chartinkLogo from "@/assets/chartink-logo.png.asset.json";
+import { zamzamLogo } from "@/lib/media";
+import { zamzamDarkLogo } from "@/lib/media";
+import { chartinkLogo } from "@/lib/media";
 import { cn } from "@/lib/utils";
 
 /**

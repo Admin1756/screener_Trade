@@ -23,3 +23,4 @@
 - Keep Screener.in and pasted-list results in source order, Chartink results in descending percentage-gain order; show status beside each stock in a pinned identity column, and paginate only the presentation so large screens remain readable without dropping data.
 
 - Keep mobile header and identity rows shrink-safe with minmax grids; compact results only at small widths while retaining every source column and the pinned stock/status identity.
+- Media files (videos, logos) live in public/ and are referenced via src/lib/media.ts so they are committed to the git repository.
